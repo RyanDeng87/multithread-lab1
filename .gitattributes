@@ -1,0 +1,8 @@
+# Everything here runs on Linux (TACC); keep LF line endings even when
+# checked out on Windows with core.autocrlf=true.
+*.sh     text eol=lf
+*.slurm  text eol=lf
+*.py     text eol=lf
+*.h      text eol=lf
+*.cpp    text eol=lf
+Makefile text eol=lf

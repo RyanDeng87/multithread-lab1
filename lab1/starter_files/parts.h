@@ -10,9 +10,9 @@
 #ifndef LAB1_PARTS_H
 #define LAB1_PARTS_H
 
-#define HAVE_SHARDED 0      // Part 4: ShardedMap   (concurrent_map.h)
-#define HAVE_LOCKS   0      // Part 5: TAS/TTAS/Ticket/Park (locks.h)
-#define HAVE_RW      0      // Part 6: RWLock, RWLockWP         (locks.h)
+#define HAVE_SHARDED 1      // Part 4: ShardedMap   (concurrent_map.h)
+#define HAVE_LOCKS   1      // Part 5: TAS/TTAS/Ticket/Park (locks.h)
+#define HAVE_RW      1      // Part 6: RWLock, RWLockWP         (locks.h)
 #define HAVE_HASHED  0      // Part 7: StripedHashMap        (hash_map.h)
 
 #endif /* LAB1_PARTS_H */

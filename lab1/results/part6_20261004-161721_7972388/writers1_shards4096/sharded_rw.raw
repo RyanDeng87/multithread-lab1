@@ -1,0 +1,9 @@
+sharded:rw     T=8   shards=4096 mix=roles    rd=28.3 wr=2.1 Mops/s      60908544 ops    2001 ms     30.4 Mops/s
+sharded:rw     T=8   shards=4096 mix=roles    rd=28.3 wr=2.1 Mops/s      61033472 ops    2001 ms     30.5 Mops/s
+sharded:rw     T=8   shards=4096 mix=roles    rd=28.0 wr=2.0 Mops/s      60607488 ops    2016 ms     30.1 Mops/s
+sharded:rw     T=28  shards=4096 mix=roles    rd=116.5 wr=2.0 Mops/s     238391296 ops    2013 ms    118.4 Mops/s
+sharded:rw     T=28  shards=4096 mix=roles    rd=114.8 wr=2.1 Mops/s     235325440 ops    2013 ms    116.9 Mops/s
+sharded:rw     T=28  shards=4096 mix=roles    rd=115.5 wr=2.2 Mops/s     235543552 ops    2001 ms    117.7 Mops/s
+sharded:rw     T=56  shards=4096 mix=roles    rd=233.6 wr=1.3 Mops/s     472888320 ops    2014 ms    234.8 Mops/s
+sharded:rw     T=56  shards=4096 mix=roles    rd=235.1 wr=1.8 Mops/s     479406080 ops    2024 ms    236.9 Mops/s
+sharded:rw     T=56  shards=4096 mix=roles    rd=233.8 wr=2.1 Mops/s     473280512 ops    2006 ms    235.9 Mops/s

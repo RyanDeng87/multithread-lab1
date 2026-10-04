@@ -1,0 +1,16 @@
+2026-10-04T16:53:01-05:00
+c309-005.ls6.tacc.utexas.edu
+4.18.0-553.150.1.el8_10.x86_64
+g++ (GCC) 15.2.0
+LD_PRELOAD=
+#define HAVE_SHARDED 1      // Part 4: ShardedMap   (concurrent_map.h)
+#define HAVE_LOCKS   1      // Part 5: TAS/TTAS/Ticket/Park (locks.h)
+#define HAVE_RW      1      // Part 6: RWLock, RWLockWP         (locks.h)
+#define HAVE_HASHED  0      // Part 7: StripedHashMap        (hash_map.h)
+cc1974d5280b6215cbaf80812660c2c8  interface.h
+9a87e01ce0684ef8fb6f3355b7187457  parts.h
+efbf5aaeac5db075f2e0594f37448e42  concurrent_map.h
+a68b2df2727b67a9ac7ba70fc5d75f0d  locks.h
+44e0d2058d3595a09fee1f3975cc566b  hash_map.h
+acd48267610a3fbc78f72054cbbb836a  ../tests/test_locks.cpp
+2eb71b67029baa24b0c745c6cb299bcd  ../tests/test_map.cpp

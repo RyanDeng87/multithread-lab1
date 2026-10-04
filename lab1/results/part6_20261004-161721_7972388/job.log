@@ -1,0 +1,75 @@
+[16:17:21] results -> /home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388
+[16:17:22] module gcc/13.2.0
+[16:17:22] compiler: g++ (GCC) 13.2.0
+#define HAVE_SHARDED 1      // Part 4: ShardedMap   (concurrent_map.h)
+#define HAVE_LOCKS   1      // Part 5: TAS/TTAS/Ticket/Park (locks.h)
+#define HAVE_RW      1      // Part 6: RWLock, RWLockWP         (locks.h)
+#define HAVE_HASHED  0      // Part 7: StripedHashMap        (hash_map.h)
+layout:        interleaved
+cores:         56   cores in package 0: 28
+socket-0 CPUs: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54
+S0_1=0  S0_8=0,2,4,6,8,10,12,14
+S0_28=0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54
+WARNING: CPU numbers alternate between sockets.  sweep.sh's pin order
+  is CPU-number order, so from T=2 its threads span BOTH sockets and its
+  '<- first socket full' tag at T=28 is wrong.  Say so in the report;
+  the perf runs in these jobs use the socket-0 lists above instead of 0-7.
+[16:17:36] perf: paranoid=0 CS_FALLBACK=0 HITM=mem_load_l3_hit_retired.xsnp_hitm REFCYC=ref-cycles
+[16:17:37] sweep sharded:ttas shards=4096 MIX=80/10/10 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:18:53] sweep sharded:rw shards=4096 MIX=80/10/10 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:20:09] sweep sharded:rwp shards=4096 MIX=80/10/10 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:21:23] sweep sharded:shared_mutex shards=4096 MIX=80/10/10 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:22:31] sweep sharded:ttas shards=4096 MIX=50/25/25 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:23:46] sweep sharded:rw shards=4096 MIX=50/25/25 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:25:01] sweep sharded:rwp shards=4096 MIX=50/25/25 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:26:17] sweep sharded:shared_mutex shards=4096 MIX=50/25/25 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:27:24] sweep sharded:ttas shards=4096 MIX=100/0/0 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:28:32] sweep sharded:rw shards=4096 MIX=100/0/0 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:29:39] sweep sharded:rwp shards=4096 MIX=100/0/0 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:30:47] sweep sharded:shared_mutex shards=4096 MIX=100/0/0 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:31:54] sweep sharded:ttas shards=1 MIX=80/10/10 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:33:06] sweep sharded:rw shards=1 MIX=80/10/10 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:34:18] sweep sharded:rwp shards=1 MIX=80/10/10 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:35:28] sweep sharded:shared_mutex shards=1 MIX=80/10/10 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:36:37] sweep sharded:ttas shards=1 MIX=50/25/25 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:37:49] sweep sharded:rw shards=1 MIX=50/25/25 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:39:02] sweep sharded:rwp shards=1 MIX=50/25/25 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:40:11] sweep sharded:shared_mutex shards=1 MIX=50/25/25 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:41:20] sweep sharded:ttas shards=1 MIX=100/0/0 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:42:29] sweep sharded:rw shards=1 MIX=100/0/0 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:43:37] sweep sharded:rwp shards=1 MIX=100/0/0 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:44:45] sweep sharded:shared_mutex shards=1 MIX=100/0/0 WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:45:53] sweep sharded:rw shards=4096 MIX= WRITERS=1 BUCKETS= T=[8 28 56]
+[16:46:14] sweep sharded:rwp shards=4096 MIX= WRITERS=1 BUCKETS= T=[8 28 56]
+[16:46:34] sweep sharded:rw shards=4096 MIX= WRITERS=4 BUCKETS= T=[8 28 56]
+[16:46:55] sweep sharded:rwp shards=4096 MIX= WRITERS=4 BUCKETS= T=[8 28 56]
+[16:47:16] sweep sharded:rw shards=1 MIX= WRITERS=1 BUCKETS= T=[8 28 56]
+[16:47:37] sweep sharded:rwp shards=1 MIX= WRITERS=1 BUCKETS= T=[8 28 56]
+[16:47:58] sweep sharded:rw shards=1 MIX= WRITERS=4 BUCKETS= T=[8 28 56]
+[16:48:19] sweep sharded:rwp shards=1 MIX= WRITERS=4 BUCKETS= T=[8 28 56]
+file	impl	T	shards	rd_Mops	wr_Mops	total_Mops
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers1_shards1/sharded_rwp.raw	sharded:rwp	8	1	0.2	0.9	1.1
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers1_shards1/sharded_rwp.raw	sharded:rwp	28	1	0.4	0.4	0.8
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers1_shards1/sharded_rwp.raw	sharded:rwp	56	1	0.3	0.2	0.5
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers1_shards1/sharded_rw.raw	sharded:rw	8	1	6.9	0.0	6.9
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers1_shards1/sharded_rw.raw	sharded:rw	28	1	9.1	0.0	9.1
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers1_shards1/sharded_rw.raw	sharded:rw	56	1	8.2	0.0	8.2
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers1_shards4096/sharded_rwp.raw	sharded:rwp	8	4096	28.2	2.1	30.2
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers1_shards4096/sharded_rwp.raw	sharded:rwp	28	4096	114.0	2.1	116.1
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers1_shards4096/sharded_rwp.raw	sharded:rwp	56	4096	209.1	1.8	210.9
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers1_shards4096/sharded_rw.raw	sharded:rw	8	4096	28.3	2.1	30.4
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers1_shards4096/sharded_rw.raw	sharded:rw	28	4096	115.5	2.2	117.7
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers1_shards4096/sharded_rw.raw	sharded:rw	56	4096	233.8	2.1	235.9
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers4_shards1/sharded_rwp.raw	sharded:rwp	8	1	0.0	1.0	1.0
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers4_shards1/sharded_rwp.raw	sharded:rwp	28	1	0.0	0.6	0.7
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers4_shards1/sharded_rwp.raw	sharded:rwp	56	1	0.0	0.4	0.4
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers4_shards1/sharded_rw.raw	sharded:rw	8	1	1.0	1.0	2.0
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers4_shards1/sharded_rw.raw	sharded:rw	28	1	8.0	0.0	8.0
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers4_shards1/sharded_rw.raw	sharded:rw	56	1	7.8	0.0	7.8
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers4_shards4096/sharded_rwp.raw	sharded:rwp	8	4096	13.3	7.1	20.4
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers4_shards4096/sharded_rwp.raw	sharded:rwp	28	4096	93.6	7.5	101.1
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers4_shards4096/sharded_rwp.raw	sharded:rwp	56	4096	203.7	7.4	211.1
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers4_shards4096/sharded_rw.raw	sharded:rw	8	4096	13.3	7.4	20.6
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers4_shards4096/sharded_rw.raw	sharded:rw	28	4096	94.1	8.0	102.0
+/home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/writers4_shards4096/sharded_rw.raw	sharded:rw	56	4096	210.1	7.9	218.0
+[16:48:40] finished cleanly; artifacts in /home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388

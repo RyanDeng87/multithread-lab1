@@ -1,0 +1,99 @@
+CoarseMap: sequential
+CoarseMap: disjoint keys, 8 threads
+CoarseMap: contended keys, 8 threads
+CoarseMap: concurrent size(), exact
+CoarseMap: 0.1 s
+ShardedMap<mutex>: sequential
+ShardedMap<mutex>: disjoint keys, 8 threads
+ShardedMap<mutex>: contended keys, 8 threads
+ShardedMap<mutex>: concurrent size(), exact
+ShardedMap<mutex>: 0.0 s
+ShardedMap<mutex>(1): sequential
+ShardedMap<mutex>(1): disjoint keys, 8 threads
+ShardedMap<mutex>(1): contended keys, 8 threads
+ShardedMap<mutex>(1): concurrent size(), exact
+ShardedMap<mutex>(1): 0.2 s
+ShardedMap<shared_mutex>: sequential
+ShardedMap<shared_mutex>: disjoint keys, 8 threads
+ShardedMap<shared_mutex>: contended keys, 8 threads
+ShardedMap<shared_mutex>: concurrent size(), exact
+ShardedMap<shared_mutex>: 0.1 s
+ShardedMap<mutex,nopad>: sequential
+ShardedMap<mutex,nopad>: disjoint keys, 8 threads
+ShardedMap<mutex,nopad>: contended keys, 8 threads
+ShardedMap<mutex,nopad>: concurrent size(), exact
+ShardedMap<mutex,nopad>: 0.2 s
+ShardedMap<TAS>: sequential
+ShardedMap<TAS>: disjoint keys, 8 threads
+ShardedMap<TAS>: contended keys, 8 threads
+ShardedMap<TAS>: concurrent size(), exact
+ShardedMap<TAS>: 0.0 s
+ShardedMap<TTAS>: sequential
+ShardedMap<TTAS>: disjoint keys, 8 threads
+==================
+WARNING: ThreadSanitizer: data race (pid=1232019)
+  Read of size 8 at 0x7b0c00031520 by thread T14:
+    #0 std::less<long>::operator()(long const&, long const&) const /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_function.h:386 (test_map_tsan+0x41ff4c)
+    #1 std::_Rb_tree<long, std::pair<long const, long>, std::_Select1st<std::pair<long const, long> >, std::less<long>, std::allocator<std::pair<long const, long> > >::_M_lower_bound(std::_Rb_tree_node<std::pair<long const, long> >*, std::_Rb_tree_node_base*, long const&) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_tree.h:1903 (test_map_tsan+0x41ff4c)
+    #2 std::_Rb_tree<long, std::pair<long const, long>, std::_Select1st<std::pair<long const, long> >, std::less<long>, std::allocator<std::pair<long const, long> > >::lower_bound(long const&) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_tree.h:1270 (test_map_tsan+0x40b168)
+    #3 std::map<long, long, std::less<long>, std::allocator<std::pair<long const, long> > >::lower_bound(long const&) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_map.h:1259 (test_map_tsan+0x40b168)
+    #4 std::pair<std::_Rb_tree_iterator<std::pair<long const, long> >, bool> std::map<long, long, std::less<long>, std::allocator<std::pair<long const, long> > >::insert_or_assign<long const&>(long const&, long const&) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_map.h:920 (test_map_tsan+0x40b168)
+    #5 ShardedMap<long, long, TTASLock, true>::insert(long const&, long const&) concurrent_map.h:99 (test_map_tsan+0x40b168)
+    #6 operator() ../tests/test_map.cpp:76 (test_map_tsan+0x40b168)
+    #7 __invoke_impl<void, test_disjoint<ShardedMap<long int, long int, TTASLock> >(ShardedMap<long int, long int, TTASLock>&, char const*)::<lambda()> > /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/invoke.h:61 (test_map_tsan+0x40b168)
+    #8 __invoke<test_disjoint<ShardedMap<long int, long int, TTASLock> >(ShardedMap<long int, long int, TTASLock>&, char const*)::<lambda()> > /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/invoke.h:96 (test_map_tsan+0x40b168)
+    #9 _M_invoke<0> /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/std_thread.h:253 (test_map_tsan+0x40b168)
+    #10 operator() /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/std_thread.h:260 (test_map_tsan+0x40b168)
+    #11 _M_run /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/std_thread.h:211 (test_map_tsan+0x40b168)
+    #12 execute_native_thread_routine ../../../.././libstdc++-v3/src/c++11/thread.cc:82 (libstdc++.so.6+0xdfa23)
+
+  Previous write of size 8 at 0x7b0c00031520 by thread T13:
+    #0 operator new(unsigned long) ../../.././libsanitizer/tsan/tsan_new_delete.cpp:64 (libtsan.so.0+0x8c5ac)
+    #1 __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<long const, long> > >::allocate(unsigned long, void const*) /opt/apps/gcc/11.2.0/include/c++/11.2.0/ext/new_allocator.h:127 (test_map_tsan+0x420c43)
+    #2 std::allocator<std::_Rb_tree_node<std::pair<long const, long> > >::allocate(unsigned long) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/allocator.h:197 (test_map_tsan+0x420c43)
+    #3 std::allocator_traits<std::allocator<std::_Rb_tree_node<std::pair<long const, long> > > >::allocate(std::allocator<std::_Rb_tree_node<std::pair<long const, long> > >&, unsigned long) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/alloc_traits.h:460 (test_map_tsan+0x420c43)
+    #4 std::_Rb_tree<long, std::pair<long const, long>, std::_Select1st<std::pair<long const, long> >, std::less<long>, std::allocator<std::pair<long const, long> > >::_M_get_node() /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_tree.h:561 (test_map_tsan+0x420c43)
+    #5 std::_Rb_tree_node<std::pair<long const, long> >* std::_Rb_tree<long, std::pair<long const, long>, std::_Select1st<std::pair<long const, long> >, std::less<long>, std::allocator<std::pair<long const, long> > >::_M_create_node<std::piecewise_construct_t const&, std::tuple<long const&>, std::tuple<long const&> >(std::piecewise_construct_t const&, std::tuple<long const&>&&, std::tuple<long const&>&&) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_tree.h:611 (test_map_tsan+0x420c43)
+    #6 std::_Rb_tree_iterator<std::pair<long const, long> > std::_Rb_tree<long, std::pair<long const, long>, std::_Select1st<std::pair<long const, long> >, std::less<long>, std::allocator<std::pair<long const, long> > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<long const&>, std::tuple<long const&> >(std::_Rb_tree_const_iterator<std::pair<long const, long> >, std::piecewise_construct_t const&, std::tuple<long const&>&&, std::tuple<long const&>&&) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_tree.h:2429 (test_map_tsan+0x420c43)
+    #7 std::_Rb_tree_iterator<std::pair<long const, long> > std::map<long, long, std::less<long>, std::allocator<std::pair<long const, long> > >::emplace_hint<std::piecewise_construct_t const&, std::tuple<long const&>, std::tuple<long const&> >(std::_Rb_tree_const_iterator<std::pair<long const, long> >, std::piecewise_construct_t const&, std::tuple<long const&>&&, std::tuple<long const&>&&) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_map.h:608 (test_map_tsan+0x40b1d6)
+    #8 std::pair<std::_Rb_tree_iterator<std::pair<long const, long> >, bool> std::map<long, long, std::less<long>, std::allocator<std::pair<long const, long> > >::insert_or_assign<long const&>(long const&, long const&) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_map.h:923 (test_map_tsan+0x40b1d6)
+    #9 ShardedMap<long, long, TTASLock, true>::insert(long const&, long const&) concurrent_map.h:99 (test_map_tsan+0x40b1d6)
+    #10 operator() ../tests/test_map.cpp:76 (test_map_tsan+0x40b1d6)
+    #11 __invoke_impl<void, test_disjoint<ShardedMap<long int, long int, TTASLock> >(ShardedMap<long int, long int, TTASLock>&, char const*)::<lambda()> > /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/invoke.h:61 (test_map_tsan+0x40b1d6)
+    #12 __invoke<test_disjoint<ShardedMap<long int, long int, TTASLock> >(ShardedMap<long int, long int, TTASLock>&, char const*)::<lambda()> > /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/invoke.h:96 (test_map_tsan+0x40b1d6)
+    #13 _M_invoke<0> /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/std_thread.h:253 (test_map_tsan+0x40b1d6)
+    #14 operator() /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/std_thread.h:260 (test_map_tsan+0x40b1d6)
+    #15 _M_run /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/std_thread.h:211 (test_map_tsan+0x40b1d6)
+    #16 execute_native_thread_routine ../../../.././libstdc++-v3/src/c++11/thread.cc:82 (libstdc++.so.6+0xdfa23)
+
+  Location is heap block of size 48 at 0x7b0c00031500 allocated by thread T13:
+    #0 operator new(unsigned long) ../../.././libsanitizer/tsan/tsan_new_delete.cpp:64 (libtsan.so.0+0x8c5ac)
+    #1 __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<long const, long> > >::allocate(unsigned long, void const*) /opt/apps/gcc/11.2.0/include/c++/11.2.0/ext/new_allocator.h:127 (test_map_tsan+0x420c43)
+    #2 std::allocator<std::_Rb_tree_node<std::pair<long const, long> > >::allocate(unsigned long) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/allocator.h:197 (test_map_tsan+0x420c43)
+    #3 std::allocator_traits<std::allocator<std::_Rb_tree_node<std::pair<long const, long> > > >::allocate(std::allocator<std::_Rb_tree_node<std::pair<long const, long> > >&, unsigned long) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/alloc_traits.h:460 (test_map_tsan+0x420c43)
+    #4 std::_Rb_tree<long, std::pair<long const, long>, std::_Select1st<std::pair<long const, long> >, std::less<long>, std::allocator<std::pair<long const, long> > >::_M_get_node() /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_tree.h:561 (test_map_tsan+0x420c43)
+    #5 std::_Rb_tree_node<std::pair<long const, long> >* std::_Rb_tree<long, std::pair<long const, long>, std::_Select1st<std::pair<long const, long> >, std::less<long>, std::allocator<std::pair<long const, long> > >::_M_create_node<std::piecewise_construct_t const&, std::tuple<long const&>, std::tuple<long const&> >(std::piecewise_construct_t const&, std::tuple<long const&>&&, std::tuple<long const&>&&) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_tree.h:611 (test_map_tsan+0x420c43)
+    #6 std::_Rb_tree_iterator<std::pair<long const, long> > std::_Rb_tree<long, std::pair<long const, long>, std::_Select1st<std::pair<long const, long> >, std::less<long>, std::allocator<std::pair<long const, long> > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<long const&>, std::tuple<long const&> >(std::_Rb_tree_const_iterator<std::pair<long const, long> >, std::piecewise_construct_t const&, std::tuple<long const&>&&, std::tuple<long const&>&&) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_tree.h:2429 (test_map_tsan+0x420c43)
+    #7 std::_Rb_tree_iterator<std::pair<long const, long> > std::map<long, long, std::less<long>, std::allocator<std::pair<long const, long> > >::emplace_hint<std::piecewise_construct_t const&, std::tuple<long const&>, std::tuple<long const&> >(std::_Rb_tree_const_iterator<std::pair<long const, long> >, std::piecewise_construct_t const&, std::tuple<long const&>&&, std::tuple<long const&>&&) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_map.h:608 (test_map_tsan+0x40b1d6)
+    #8 std::pair<std::_Rb_tree_iterator<std::pair<long const, long> >, bool> std::map<long, long, std::less<long>, std::allocator<std::pair<long const, long> > >::insert_or_assign<long const&>(long const&, long const&) /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_map.h:923 (test_map_tsan+0x40b1d6)
+    #9 ShardedMap<long, long, TTASLock, true>::insert(long const&, long const&) concurrent_map.h:99 (test_map_tsan+0x40b1d6)
+    #10 operator() ../tests/test_map.cpp:76 (test_map_tsan+0x40b1d6)
+    #11 __invoke_impl<void, test_disjoint<ShardedMap<long int, long int, TTASLock> >(ShardedMap<long int, long int, TTASLock>&, char const*)::<lambda()> > /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/invoke.h:61 (test_map_tsan+0x40b1d6)
+    #12 __invoke<test_disjoint<ShardedMap<long int, long int, TTASLock> >(ShardedMap<long int, long int, TTASLock>&, char const*)::<lambda()> > /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/invoke.h:96 (test_map_tsan+0x40b1d6)
+    #13 _M_invoke<0> /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/std_thread.h:253 (test_map_tsan+0x40b1d6)
+    #14 operator() /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/std_thread.h:260 (test_map_tsan+0x40b1d6)
+    #15 _M_run /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/std_thread.h:211 (test_map_tsan+0x40b1d6)
+    #16 execute_native_thread_routine ../../../.././libstdc++-v3/src/c++11/thread.cc:82 (libstdc++.so.6+0xdfa23)
+
+  Thread T14 (tid=1232154, running) created by main thread at:
+    #0 pthread_create ../../.././libsanitizer/tsan/tsan_interceptors_posix.cpp:969 (libtsan.so.0+0x5edc5)
+    #1 std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) /admin/build/admin/rpms/ls6/BUILD/gcc-11.2.0/x86_64-pc-linux-gnu/libstdc++-v3/include/x86_64-pc-linux-gnu/bits/gthr-default.h:663 (libstdc++.so.6+0xdfcd9)
+    #2 main ../tests/test_map.cpp:191 (test_map_tsan+0x419ceb)
+
+  Thread T13 (tid=1232153, running) created by main thread at:
+    #0 pthread_create ../../.././libsanitizer/tsan/tsan_interceptors_posix.cpp:969 (libtsan.so.0+0x5edc5)
+    #1 std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) /admin/build/admin/rpms/ls6/BUILD/gcc-11.2.0/x86_64-pc-linux-gnu/libstdc++-v3/include/x86_64-pc-linux-gnu/bits/gthr-default.h:663 (libstdc++.so.6+0xdfcd9)
+    #2 main ../tests/test_map.cpp:191 (test_map_tsan+0x419ceb)
+
+SUMMARY: ThreadSanitizer: data race /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_function.h:386 in std::less<long>::operator()(long const&, long const&) const
+==================

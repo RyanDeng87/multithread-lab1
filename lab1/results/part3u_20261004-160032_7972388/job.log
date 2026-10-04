@@ -1,0 +1,32 @@
+[16:00:32] results -> /home1/11833/ryandeng87/lab1/results/part3u_20261004-160032_7972388
+[16:00:32] module gcc/13.2.0
+[16:00:32] compiler: g++ (GCC) 13.2.0
+#define HAVE_SHARDED 1      // Part 4: ShardedMap   (concurrent_map.h)
+#define HAVE_LOCKS   1      // Part 5: TAS/TTAS/Ticket/Park (locks.h)
+#define HAVE_RW      1      // Part 6: RWLock, RWLockWP         (locks.h)
+#define HAVE_HASHED  0      // Part 7: StripedHashMap        (hash_map.h)
+layout:        interleaved
+cores:         56   cores in package 0: 28
+socket-0 CPUs: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54
+S0_1=0  S0_8=0,2,4,6,8,10,12,14
+S0_28=0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54
+WARNING: CPU numbers alternate between sockets.  sweep.sh's pin order
+  is CPU-number order, so from T=2 its threads span BOTH sockets and its
+  '<- first socket full' tag at T=28 is wrong.  Say so in the report;
+  the perf runs in these jobs use the socket-0 lists above instead of 0-7.
+[16:00:47] perf: paranoid=0 CS_FALLBACK=0 HITM=mem_load_l3_hit_retired.xsnp_hitm REFCYC=ref-cycles
+[16:00:50] mux check: every event counted 100% of the time
+[16:00:52] perf coarse T=1 shards=1 cpus=0 DELAY=384 rep 1
+[16:00:58] perf coarse T=1 shards=1 cpus=0 DELAY=384 rep 2
+[16:01:04] perf coarse T=1 shards=1 cpus=0 DELAY=384 rep 3
+[16:01:11] perf coarse T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=384 rep 1
+[16:01:17] perf coarse T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=384 rep 2
+[16:01:24] perf coarse T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=384 rep 3
+[16:01:31] perf coarse T=28 shards=1 cpus=0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54 DELAY=390 rep 1
+[16:01:37] perf coarse T=28 shards=1 cpus=0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54 DELAY=390 rep 2
+[16:01:43] perf coarse T=28 shards=1 cpus=0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54 DELAY=390 rep 3
+file                                                                                           flag  impl    T   shards  mix       cpus                                                                            Mops   ops       f      cyc/op  ins/op  IPC    L1miss/op  LLCmiss/op  HITM/op    rHITM/op  cs/op(perf)  cs/op(rusage)  busy  busy_ref  taskclk_cpus  Mops_min  Mops_max  reps
+/home1/11833/ryandeng87/lab1/results/part3u_20261004-160032_7972388/perf/coarse_T1_S1.r2.txt   ok    coarse  1   1       80/10/10  0                                                                               2.129  10643456  0.948  1465    323.6   0.221  24.26      0.5079      3.288e-06  0         8.456e-07                                   1.01          2.126     2.131     3
+/home1/11833/ryandeng87/lab1/results/part3u_20261004-160032_7972388/perf/coarse_T28_S1.r1.txt  ok    coarse  28  1       80/10/10  0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54  1.012  5074944   0.947  2889    361.4   0.125  38.18      0.8431      1.548      0         0.7657                                      22.21         0.9972    1.023     3
+/home1/11833/ryandeng87/lab1/results/part3u_20261004-160032_7972388/perf/coarse_T8_S1.r2.txt   ok    coarse  8   1       80/10/10  0,2,4,6,8,10,12,14                                                              1.018  5092352   0.948  2469    353.5   0.143  33.84      0.9106      0.9331     0         0.544                                       4.35          1.017     1.019     3
+[16:01:49] finished cleanly; artifacts in /home1/11833/ryandeng87/lab1/results/part3u_20261004-160032_7972388

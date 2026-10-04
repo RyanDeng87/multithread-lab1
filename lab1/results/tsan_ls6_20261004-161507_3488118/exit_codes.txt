@@ -1,0 +1,5 @@
+test_map: exit=0  wall=1 s
+test_locks: exit=0  wall=0 s
+test_map_tsan: exit=0  wall=1 s
+test_locks_tsan: exit=0  wall=1 s
+race_control: exit=66  wall=0 s

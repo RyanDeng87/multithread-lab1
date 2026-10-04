@@ -1,0 +1,15 @@
+# perf stat -x, -D 384 -e cycles:u,instructions:u,L1-dcache-loads:u,L1-dcache-load-misses:u,cache-misses:u,mem_load_l3_hit_retired.xsnp_hitm:u,mem_load_l3_miss_retired.remote_hitm:u,context-switches,cpu-migrations,task-clock -- taskset -c 0,2,4,6,8,10,12,14 ./bench coarse 8 1 5
+warm-up 123 ms
+coarse         T=8   shards=1    mix=80/10/10      5092352 ops    5004 ms      1.0 Mops/s
+event                                   count         per op
+cycles:u                          12574860935           2469
+instructions:u                     1800253506          353.5
+L1-dcache-loads                     483018276          94.85
+L1-dcache-load-misses               172340714          33.84
+cache-misses:u                        4637041         0.9106
+mem_load_l3_hit_retired.xsnp_hitm:u          4751559         0.9331
+mem_load_l3_miss_retired.remote_hitm:u                0              0
+context-switches                      2770352          0.544
+cpu-migrations                            313      6.146e-05
+task-clock                           20632.79       0.004052
+IPC (instructions/cycles)                              0.143

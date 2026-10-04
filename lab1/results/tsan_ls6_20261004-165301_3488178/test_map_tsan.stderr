@@ -1,0 +1,18 @@
+==1243113==Program is run with unlimited stack size, which wouldn't work with ThreadSanitizer.
+Re-execing with stack size limited to 33554432 bytes.
+==1243113==Installed the sigaction for signal 11
+==1243113==Installed the sigaction for signal 7
+==1243113==Installed the sigaction for signal 8
+***** Running under ThreadSanitizer v3 (pid 1243113) *****
+Stats: SizeClassAllocator64: 2M mapped (0M rss) in 138067 allocations; remains 794
+  01 (    16): mapped:    256K allocs:     128 frees:       0 inuse:    128 num_freed_chunks   16256 avail:  16384 rss:      4K releases:      0 last released:      0K region: 0x720400000000
+  02 (    32): mapped:    256K allocs:   31232 frees:   31196 inuse:     36 num_freed_chunks    8156 avail:   8192 rss:     40K releases:      0 last released:      0K region: 0x720800000000
+  03 (    48): mapped:    512K allocs:  106240 frees:  106077 inuse:    163 num_freed_chunks   10759 avail:  10922 rss:    400K releases:      0 last released:      0K region: 0x720c00000000
+  04 (    64): mapped:    256K allocs:     128 frees:       0 inuse:    128 num_freed_chunks    3968 avail:   4096 rss:      4K releases:      0 last released:      0K region: 0x721000000000
+  08 (   128): mapped:    256K allocs:     128 frees:       0 inuse:    128 num_freed_chunks    1920 avail:   2048 rss:      4K releases:      0 last released:      0K region: 0x722000000000
+  17 (   320): mapped:    256K allocs:     128 frees:       0 inuse:    128 num_freed_chunks     691 avail:    819 rss:      4K releases:      0 last released:      0K region: 0x724400000000
+  26 (  1536): mapped:    256K allocs:      42 frees:       0 inuse:     42 num_freed_chunks     128 avail:    170 rss:      4K releases:      0 last released:      0K region: 0x726800000000
+  28 (  2048): mapped:    256K allocs:      32 frees:       0 inuse:     32 num_freed_chunks      96 avail:    128 rss:      4K releases:      0 last released:      0K region: 0x727000000000
+  36 (  8192): mapped:    256K allocs:       8 frees:       0 inuse:      8 num_freed_chunks      24 avail:     32 rss:      4K releases:      0 last released:      0K region: 0x729000000000
+  49 ( 81920): mapped:    256K allocs:       1 frees:       0 inuse:      1 num_freed_chunks       2 avail:      3 rss:      4K releases:      0 last released:      0K region: 0x72c400000000
+Stats: LargeMmapAllocator: allocated 0 times, remains 0 (0 K) max 0 M; by size logs: 

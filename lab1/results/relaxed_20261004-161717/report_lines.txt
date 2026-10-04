@@ -1,0 +1,15 @@
+== c309-005.ls6.tacc.utexas.edu  g++ (GCC) 11.2.0
+--- make_test_test_map: make_test_test_map: exit=0
+all checks passed
+--- make_test_test_locks: make_test_test_locks: exit=0
+all checks passed
+--- tsan_test_map: tsan_test_map: exit=66
+SUMMARY: ThreadSanitizer: data race /opt/apps/gcc/11.2.0/include/c++/11.2.0/bits/stl_function.h:386 in std::less<long>::operator()(long const&, long const&) const
+    #5 ShardedMap<long, long, TTASLock, true>::insert(long const&, long const&) concurrent_map.h:99 (test_map_tsan+0x40b168)
+    #6 operator() ../tests/test_map.cpp:76 (test_map_tsan+0x40b168)
+    #9 ShardedMap<long, long, TTASLock, true>::insert(long const&, long const&) concurrent_map.h:99 (test_map_tsan+0x40b1d6)
+--- tsan_test_locks: tsan_test_locks: exit=66
+SUMMARY: ThreadSanitizer: data race ../tests/test_locks.cpp:62 in operator()
+    #0 operator() ../tests/test_locks.cpp:62 (test_locks_tsan+0x403023)
+    #0 operator() ../tests/test_locks.cpp:62 (test_locks_tsan+0x403032)
+    #2 main ../tests/test_locks.cpp:140 (test_locks_tsan+0x406fd5)

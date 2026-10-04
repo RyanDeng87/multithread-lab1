@@ -1,0 +1,14 @@
+# perf stat -x, -D 321 -e cycles,instructions,L1-dcache-loads,L1-dcache-load-misses,cache-misses,context-switches,cpu-migrations,task-clock,ref-cycles -- taskset -c 0,2,4,6,8,10,12,14 ./bench sharded:ticket 32 4096 5
+warm-up 80 ms
+sharded:ticket T=32  shards=4096 mix=80/10/10     51581952 ops    5056 ms     10.2 Mops/s
+event                                   count         per op
+cycles                           126626986971           2455
+instructions                     101109249114           1960
+L1-dcache-loads                   30509865197          591.5
+L1-dcache-load-misses              1271233120          24.64
+cache-misses                         22970025         0.4453
+context-switches                     37033988          0.718
+cpu-migrations                            182      3.528e-06
+task-clock                           38351.41      0.0007435
+ref-cycles                       103541121396           2007
+IPC (instructions/cycles)                              0.798

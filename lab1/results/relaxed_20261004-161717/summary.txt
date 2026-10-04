@@ -1,0 +1,4 @@
+make_test_test_map: exit=0
+make_test_test_locks: exit=0
+tsan_test_map: exit=66
+tsan_test_locks: exit=66

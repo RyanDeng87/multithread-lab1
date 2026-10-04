@@ -1,0 +1,3 @@
+rc=0 cpus=0-31 args=[sharded:park 32 4] MIX= WRITERS= BUCKETS= stderr=[warm-up 129 ms ]
+rc=0 cpus=0-31 args=[sharded:park 32 4] MIX= WRITERS= BUCKETS= stderr=[warm-up 129 ms ]
+rc=0 cpus=0-31 args=[sharded:park 32 4] MIX= WRITERS= BUCKETS= stderr=[warm-up 127 ms ]

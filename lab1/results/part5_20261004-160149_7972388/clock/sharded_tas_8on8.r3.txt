@@ -1,0 +1,9 @@
+# perf stat -x, -D 320 -e cycles,instructions,task-clock,ref-cycles -- taskset -c 0,2,4,6,8,10,12,14 ./bench sharded:tas 8 4096 5
+warm-up 81 ms
+sharded:tas    T=8   shards=4096 mix=80/10/10    158878720 ops    5011 ms     31.7 Mops/s
+event                                   count         per op
+cycles                           125826003277            792
+instructions                      31700039695          199.5
+task-clock                           38129.11        0.00024
+ref-cycles                       102946745448            648
+IPC (instructions/cycles)                              0.252

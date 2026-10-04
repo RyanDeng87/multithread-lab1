@@ -1,0 +1,3 @@
+sharded:ttas   T=32  shards=256  mix=80/10/10    111682560 ops    2025 ms     55.1 Mops/s
+sharded:ttas   T=32  shards=256  mix=80/10/10    111294464 ops    2050 ms     54.3 Mops/s
+sharded:ttas   T=32  shards=256  mix=80/10/10    108754944 ops    2037 ms     53.4 Mops/s

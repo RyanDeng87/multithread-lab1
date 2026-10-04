@@ -1,0 +1,9 @@
+sharded:rwp    T=8   shards=1    mix=roles    rd=0.2 wr=0.9 Mops/s       2183168 ops    2013 ms      1.1 Mops/s
+sharded:rwp    T=8   shards=1    mix=roles    rd=0.3 wr=0.9 Mops/s       2275328 ops    2002 ms      1.1 Mops/s
+sharded:rwp    T=8   shards=1    mix=roles    rd=0.2 wr=0.9 Mops/s       2187264 ops    2014 ms      1.1 Mops/s
+sharded:rwp    T=28  shards=1    mix=roles    rd=0.4 wr=0.4 Mops/s       1738752 ops    2022 ms      0.9 Mops/s
+sharded:rwp    T=28  shards=1    mix=roles    rd=0.4 wr=0.4 Mops/s       1602560 ops    2013 ms      0.8 Mops/s
+sharded:rwp    T=28  shards=1    mix=roles    rd=0.4 wr=0.4 Mops/s       1592320 ops    2007 ms      0.8 Mops/s
+sharded:rwp    T=56  shards=1    mix=roles    rd=0.3 wr=0.2 Mops/s       1018880 ops    2014 ms      0.5 Mops/s
+sharded:rwp    T=56  shards=1    mix=roles    rd=0.3 wr=0.2 Mops/s       1034240 ops    2023 ms      0.5 Mops/s
+sharded:rwp    T=56  shards=1    mix=roles    rd=0.3 wr=0.2 Mops/s        954368 ops    2006 ms      0.5 Mops/s

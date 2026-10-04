@@ -1,0 +1,12 @@
+# /home1/11833/ryandeng87/lab1/results/part6_20261004-161721_7972388/bin/benchlog sharded:rw shards=4096 mix=100/0/0 writers=0
+# cores=56 hwthreads=56 sockets=2 cores/socket=28 pin order: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55
+T=1         6.7 Mops/s  (6.7 6.9 6.7)
+T=2        11.5 Mops/s  (11.9 11.5 11.4)
+T=4        22.4 Mops/s  (24.8 21.2 22.4)
+T=8        46.4 Mops/s  (46.3 47.4 46.4)
+T=16       92.8 Mops/s  (91.6 93.1 92.8)
+T=28      161.5 Mops/s  (170.6 161.5 160.2)  <- first socket full
+T=40      226.5 Mops/s  (227.6 226.5 225.7)
+T=56      311.8 Mops/s  (310.6 311.8 313.5)  <- every core busy
+T=84      313.4 Mops/s  (331.0 309.4 313.4)  <- oversubscribed
+T=112     312.4 Mops/s  (313.9 306.9 312.4)  <- oversubscribed

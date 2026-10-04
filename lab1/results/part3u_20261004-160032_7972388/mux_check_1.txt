@@ -1,0 +1,12 @@
+warm-up 123 ms
+coarse         T=8   shards=1    mix=80/10/10       978944 ops    1004 ms      1.0 Mops/s
+3071462924,,cycles:u,5357520723,100.00,0.689,GHz
+749982046,,instructions:u,5357520723,100.00,0.24,insn per cycle
+207702881,,L1-dcache-loads,5357520723,100.00,46.581,M/sec
+48538332,,L1-dcache-load-misses,5357520723,100.00,23.37,of all L1-dcache hits
+1870587,,cache-misses:u,5357520723,100.00,,
+1487494,,mem_load_l3_hit_retired.xsnp_hitm:u,5357520723,100.00,0.334,M/sec
+0,,mem_load_l3_miss_retired.remote_hitm:u,5357520723,100.00,0.000,K/sec
+595593,,context-switches,4458936840,100.00,0.134,M/sec
+95,,cpu-migrations,4458936840,100.00,0.021,K/sec
+4458.94,msec,task-clock,4458936840,100.00,3.839,CPUs utilized

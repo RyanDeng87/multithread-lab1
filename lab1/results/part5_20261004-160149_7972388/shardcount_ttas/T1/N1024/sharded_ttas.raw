@@ -1,0 +1,3 @@
+sharded:ttas   T=1   shards=1024 mix=80/10/10      6834176 ops    2000 ms      3.4 Mops/s
+sharded:ttas   T=1   shards=1024 mix=80/10/10      6821888 ops    2000 ms      3.4 Mops/s
+sharded:ttas   T=1   shards=1024 mix=80/10/10      6816768 ops    2000 ms      3.4 Mops/s

@@ -1,0 +1,107 @@
+[16:01:49] results -> /home1/11833/ryandeng87/lab1/results/part5_20261004-160149_7972388
+[16:01:50] module gcc/13.2.0
+[16:01:50] compiler: g++ (GCC) 13.2.0
+#define HAVE_SHARDED 1      // Part 4: ShardedMap   (concurrent_map.h)
+#define HAVE_LOCKS   1      // Part 5: TAS/TTAS/Ticket/Park (locks.h)
+#define HAVE_RW      1      // Part 6: RWLock, RWLockWP         (locks.h)
+#define HAVE_HASHED  0      // Part 7: StripedHashMap        (hash_map.h)
+layout:        interleaved
+cores:         56   cores in package 0: 28
+socket-0 CPUs: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54
+S0_1=0  S0_8=0,2,4,6,8,10,12,14
+S0_28=0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54
+WARNING: CPU numbers alternate between sockets.  sweep.sh's pin order
+  is CPU-number order, so from T=2 its threads span BOTH sockets and its
+  '<- first socket full' tag at T=28 is wrong.  Say so in the report;
+  the perf runs in these jobs use the socket-0 lists above instead of 0-7.
+[16:02:05] perf: paranoid=0 CS_FALLBACK=0 HITM=mem_load_l3_hit_retired.xsnp_hitm REFCYC=ref-cycles
+[16:02:06] sweep sharded:mutex shards=4096 MIX= WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:03:13] sweep sharded:tas shards=4096 MIX= WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:04:28] sweep sharded:ttas shards=4096 MIX= WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:05:44] sweep sharded:ticket shards=4096 MIX= WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:06:51] sweep sharded:park shards=4096 MIX= WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[16:08:01] mux check: every event counted 100% of the time
+[16:08:02] perf sharded:mutex T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=390 rep 1
+[16:08:08] perf sharded:mutex T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=390 rep 2
+[16:08:14] perf sharded:mutex T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=390 rep 3
+[16:08:21] perf sharded:tas T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 1
+[16:08:28] perf sharded:tas T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 2
+[16:08:34] perf sharded:tas T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 3
+[16:08:41] perf sharded:ttas T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 1
+[16:08:47] perf sharded:ttas T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 2
+[16:08:53] perf sharded:ttas T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 3
+[16:09:01] perf sharded:ticket T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=387 rep 1
+[16:09:07] perf sharded:ticket T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=387 rep 2
+[16:09:13] perf sharded:ticket T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=387 rep 3
+[16:09:20] perf sharded:park T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 1
+[16:09:26] perf sharded:park T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 2
+[16:09:33] perf sharded:park T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 3
+[16:09:41] mux check: every event counted 100% of the time
+[16:09:42] perf sharded:mutex T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 1
+[16:09:48] perf sharded:mutex T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 2
+[16:09:54] perf sharded:mutex T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 3
+[16:10:01] perf sharded:tas T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 1
+[16:10:08] perf sharded:tas T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 2
+[16:10:14] perf sharded:tas T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 3
+[16:10:21] perf sharded:ttas T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=390 rep 1
+[16:10:27] perf sharded:ttas T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=390 rep 2
+[16:10:33] perf sharded:ttas T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=390 rep 3
+[16:10:41] perf sharded:ticket T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 1
+[16:10:47] perf sharded:ticket T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 2
+[16:10:53] perf sharded:ticket T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 3
+[16:11:00] perf sharded:park T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 1
+[16:11:07] perf sharded:park T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 2
+[16:11:13] perf sharded:park T=8 shards=1 cpus=0,2,4,6,8,10,12,14 DELAY=389 rep 3
+[16:11:20] perf sharded:tas T=8 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=320 rep 1
+[16:11:26] perf sharded:tas T=8 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=320 rep 2
+[16:11:32] perf sharded:tas T=8 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=320 rep 3
+[16:11:38] effective clock with 8 busy cores: 3.300 GHz (nominal 2.7)
+[16:11:40] mux check: every event counted 100% of the time
+[16:11:41] perf sharded:mutex T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=321 rep 1
+[16:11:47] perf sharded:mutex T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=321 rep 2
+[16:11:54] perf sharded:mutex T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=321 rep 3
+[16:12:01] perf sharded:tas T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=320 rep 1
+[16:12:08] perf sharded:tas T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=320 rep 2
+[16:12:15] perf sharded:tas T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=320 rep 3
+[16:12:24] perf sharded:ttas T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=321 rep 1
+[16:12:31] perf sharded:ttas T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=321 rep 2
+[16:12:38] perf sharded:ttas T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=321 rep 3
+[16:12:47] perf sharded:ticket T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=321 rep 1
+[16:12:53] perf sharded:ticket T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=321 rep 2
+[16:12:59] perf sharded:ticket T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=321 rep 3
+[16:13:06] perf sharded:park T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=321 rep 1
+[16:13:12] perf sharded:park T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=321 rep 2
+[16:13:19] perf sharded:park T=32 shards=4096 cpus=0,2,4,6,8,10,12,14 DELAY=321 rep 3
+[16:13:25] sweep sharded:ttas shards=1 MIX= WRITERS= BUCKETS= T=[1]
+[16:13:32] sweep sharded:ttas shards=4 MIX= WRITERS= BUCKETS= T=[1]
+[16:13:39] sweep sharded:ttas shards=16 MIX= WRITERS= BUCKETS= T=[1]
+[16:13:47] sweep sharded:ttas shards=64 MIX= WRITERS= BUCKETS= T=[1]
+[16:13:54] sweep sharded:ttas shards=256 MIX= WRITERS= BUCKETS= T=[1]
+[16:14:01] sweep sharded:ttas shards=1024 MIX= WRITERS= BUCKETS= T=[1]
+[16:14:09] sweep sharded:ttas shards=4096 MIX= WRITERS= BUCKETS= T=[1]
+[16:14:16] sweep sharded:ttas shards=16384 MIX= WRITERS= BUCKETS= T=[1]
+[16:14:23] sweep sharded:ttas shards=1 MIX= WRITERS= BUCKETS= T=[32]
+[16:14:31] sweep sharded:ttas shards=4 MIX= WRITERS= BUCKETS= T=[32]
+[16:14:38] sweep sharded:ttas shards=16 MIX= WRITERS= BUCKETS= T=[32]
+[16:14:45] sweep sharded:ttas shards=64 MIX= WRITERS= BUCKETS= T=[32]
+[16:14:53] sweep sharded:ttas shards=256 MIX= WRITERS= BUCKETS= T=[32]
+[16:15:01] sweep sharded:ttas shards=1024 MIX= WRITERS= BUCKETS= T=[32]
+[16:15:08] sweep sharded:ttas shards=4096 MIX= WRITERS= BUCKETS= T=[32]
+[16:15:16] sweep sharded:ttas shards=16384 MIX= WRITERS= BUCKETS= T=[32]
+[16:15:23] sweep sharded:park shards=1 MIX= WRITERS= BUCKETS= T=[1]
+[16:15:30] sweep sharded:park shards=4 MIX= WRITERS= BUCKETS= T=[1]
+[16:15:38] sweep sharded:park shards=16 MIX= WRITERS= BUCKETS= T=[1]
+[16:15:45] sweep sharded:park shards=64 MIX= WRITERS= BUCKETS= T=[1]
+[16:15:52] sweep sharded:park shards=256 MIX= WRITERS= BUCKETS= T=[1]
+[16:16:00] sweep sharded:park shards=1024 MIX= WRITERS= BUCKETS= T=[1]
+[16:16:07] sweep sharded:park shards=4096 MIX= WRITERS= BUCKETS= T=[1]
+[16:16:14] sweep sharded:park shards=16384 MIX= WRITERS= BUCKETS= T=[1]
+[16:16:21] sweep sharded:park shards=1 MIX= WRITERS= BUCKETS= T=[32]
+[16:16:29] sweep sharded:park shards=4 MIX= WRITERS= BUCKETS= T=[32]
+[16:16:36] sweep sharded:park shards=16 MIX= WRITERS= BUCKETS= T=[32]
+[16:16:44] sweep sharded:park shards=64 MIX= WRITERS= BUCKETS= T=[32]
+[16:16:51] sweep sharded:park shards=256 MIX= WRITERS= BUCKETS= T=[32]
+[16:16:58] sweep sharded:park shards=1024 MIX= WRITERS= BUCKETS= T=[32]
+[16:17:06] sweep sharded:park shards=4096 MIX= WRITERS= BUCKETS= T=[32]
+[16:17:13] sweep sharded:park shards=16384 MIX= WRITERS= BUCKETS= T=[32]
+[16:17:21] finished cleanly; artifacts in /home1/11833/ryandeng87/lab1/results/part5_20261004-160149_7972388

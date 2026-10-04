@@ -1,0 +1,17 @@
+--- /home1/11833/ryandeng87/lab1/starter_files/locks.h	2026-10-04 16:14:16.926106931 -0500
++++ locks.h	2026-10-04 16:17:17.890536777 -0500
+@@ -85,12 +85,12 @@
+         unsigned backoff = kMinBackoff;
+         for (;;) {
+             while (held_.load(std::memory_order_relaxed)) cpu_relax();
+-            if (!held_.exchange(true, std::memory_order_acquire)) return;
++            if (!held_.exchange(true, std::memory_order_relaxed)) return;
+             for (unsigned i = 0; i < backoff; ++i) cpu_relax();
+             if (backoff < kMaxBackoff) backoff *= 2;
+         }
+     }
+-    void unlock() noexcept { held_.store(false, std::memory_order_release); }
++    void unlock() noexcept { held_.store(false, std::memory_order_relaxed); }
+ 
+ private:
+     static constexpr unsigned kMinBackoff = 4;

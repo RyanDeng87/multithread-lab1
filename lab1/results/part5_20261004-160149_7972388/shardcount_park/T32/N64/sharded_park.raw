@@ -1,0 +1,3 @@
+sharded:park   T=32  shards=64   mix=80/10/10     67620864 ops    2002 ms     33.8 Mops/s
+sharded:park   T=32  shards=64   mix=80/10/10     67166208 ops    2002 ms     33.6 Mops/s
+sharded:park   T=32  shards=64   mix=80/10/10     68008960 ops    2002 ms     34.0 Mops/s

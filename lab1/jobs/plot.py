@@ -98,7 +98,7 @@ def plot_sweep(out, paths, title):
         ax.errorbar(xs, ys, yerr=[lo, hi], marker="o", ms=3.5, capsize=2.5,
                     lw=1.4, label=lab)
     boundaries(ax, cores, sock)
-    ax.set_xlabel("threads (pinned one per core, socket 0 first)")
+    ax.set_xlabel("threads (pinned, one per core)")
     ax.set_ylabel("throughput (Mops/s, median of 3)")
     ax.set_xlim(left=0)
     ax.set_ylim(bottom=0)

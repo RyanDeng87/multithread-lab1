@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+: "${BENCH_RAW:?}" "${BENCH_BIN:?}"
+e=$(mktemp)
+o=$(timeout "${BENCH_TIMEOUT:-300}" "$BENCH_BIN" "$@" 2>"$e"); rc=$?
+printf '%s\n' "$o" >> "$BENCH_RAW"
+printf 'rc=%s cpus=%s args=[%s] MIX=%s WRITERS=%s BUCKETS=%s stderr=[%s]\n' \
+    "$rc" "$(taskset -pc $$ | awk '{print $NF}')" "$*" "${MIX:-}" \
+    "${WRITERS:-}" "${BUCKETS:-}" "$(tr '\n' ' ' < "$e")" >> "$BENCH_RAW.meta"
+rm -f "$e"
+printf '%s\n' "$o"
+exit "$rc"

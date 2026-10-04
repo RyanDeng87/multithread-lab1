@@ -1,0 +1,20 @@
+[15:20:41] results -> /home1/11833/ryandeng87/lab1/results/part2_20261004-152041_7972219
+[15:20:42] module gcc/13.2.0
+[15:20:42] compiler: g++ (GCC) 13.2.0
+#define HAVE_SHARDED 1      // Part 4: ShardedMap   (concurrent_map.h)
+#define HAVE_LOCKS   1      // Part 5: TAS/TTAS/Ticket/Park (locks.h)
+#define HAVE_RW      1      // Part 6: RWLock, RWLockWP         (locks.h)
+#define HAVE_HASHED  0      // Part 7: StripedHashMap        (hash_map.h)
+layout:        interleaved
+cores:         56   cores in package 0: 28
+socket-0 CPUs: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54
+S0_1=0  S0_8=0,2,4,6,8,10,12,14
+S0_28=0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54
+WARNING: CPU numbers alternate between sockets.  sweep.sh's pin order
+  is CPU-number order, so from T=2 its threads span BOTH sockets and its
+  '<- first socket full' tag at T=28 is wrong.  Say so in the report;
+  the perf runs in these jobs use the socket-0 lists above instead of 0-7.
+[15:20:58] perf: paranoid=0 CS_FALLBACK=0 HITM=mem_load_l3_hit_retired.xsnp_hitm REFCYC=ref-cycles
+[15:20:59] sweep coarse shards=1 MIX= WRITERS= BUCKETS= T=[1 2 4 8 16 28 40 56 84 112]
+[15:22:09] mux check: every event counted 100% of the time
+[15:22:09] finished cleanly; artifacts in /home1/11833/ryandeng87/lab1/results/part2_20261004-152041_7972219

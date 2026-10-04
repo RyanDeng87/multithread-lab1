@@ -1,0 +1,3 @@
+sharded:mutex  T=32  shards=4    mix=80/10/10      5388288 ops    2006 ms      2.7 Mops/s
+sharded:mutex  T=32  shards=4    mix=80/10/10      5425152 ops    2006 ms      2.7 Mops/s
+sharded:mutex  T=32  shards=4    mix=80/10/10      5387264 ops    2006 ms      2.7 Mops/s

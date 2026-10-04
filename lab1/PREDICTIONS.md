@@ -74,6 +74,8 @@ Reading the table:
 
 ### One shard, 8 threads on 8 cores of one socket (graded prediction)
 
+*Added after Parts 2–4 ran, before Part 5:* on Frontera `perf_event_paranoid=0`, so the plain table also counts kernel work. mutex and Parking will look worse there (futex syscalls, context switches, scheduler misses). The user-mode-only table (`:u`) isolates the lock itself. The predictions below are for the user-mode table; in the plain table, expect mutex and Parking to show the most L1 misses and instructions per op, because of the kernel.
+
 - **Most L1 misses/op: TAS.** Every waiter spins on `exchange`, a write, so each attempt pulls the line in M state away from whoever had it. During one critical section (~0.5 µs) the line moves ~5–15 times, and each move is an L1 miss.
 - **TTAS has fewer.** Its waiters sit on a Shared copy in their own L1 (hits, no traffic). Each release costs a burst of about one miss per waiter (7) plus one or two exchange attempts, after which backoff spreads out the retries.
 - **Most instructions/op: TTAS or Ticket.** Their waiters spin on L1 hits, so their loops keep retiring instructions (load, compare, pause, backoff counter) instead of stalling on misses. TAS waiters stall ~100–300 cycles per exchange, so they retire few instructions.
@@ -86,7 +88,7 @@ Reading the table:
 
 - **Busy fraction** (cycles/op × ops/s ÷ (8 × clock)): ≈ 0.95–1.0 for TAS, TTAS and Ticket, whose spinning keeps the cores busy. ≈ 0.8–1.0 for mutex and Parking, whose waiters sleep. Runnable threads usually remain, so their cores also stay mostly busy.
 - **Throughput:** mutex ≈ Parking > TTAS ≥ TAS > Ticket.
-  - A spinlock whose holder is preempted (probability ≈ f per timer tick) makes every thread that later hashes to that shard spin through the rest of its timeslice. With 256 shards and ~1000 operations per ms, that happens within a fraction of a millisecond.
+  - A spinlock whose holder is preempted (probability ≈ f per timer tick) makes every thread that later hashes to that shard spin through the rest of its timeslice. At the chosen N = 4096, the 8 running threads together do ≈ 25 operations per µs, so one of them lands on the held shard every ~0.2 ms, well inside the ~ms the holder stays descheduled. The effect is weaker than at N = 256 but still present.
   - Ticket also suffers from **waiter** preemption. The lock is handed to one specific waiter in FIFO order; if that waiter is off-CPU, the free lock sits idle while everyone behind it spins and yields.
 - **Context switches/op:** Ticket highest (yields), then mutex and Parking (futex sleeps on collisions), then TAS/TTAS (only timeslice expiry, ≈ 10⁻⁴/op).
 

@@ -1,0 +1,3 @@
+sharded:mutex  T=1   shards=16   mix=80/10/10      5238784 ops    2000 ms      2.6 Mops/s
+sharded:mutex  T=1   shards=16   mix=80/10/10      5291008 ops    2000 ms      2.6 Mops/s
+sharded:mutex  T=1   shards=16   mix=80/10/10      5227520 ops    2000 ms      2.6 Mops/s

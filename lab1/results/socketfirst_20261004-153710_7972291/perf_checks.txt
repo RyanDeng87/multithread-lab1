@@ -1,0 +1,52 @@
+perf_event_paranoid=0
+--- perf stat -e cycles true
+4859087,,cycles,1513032,100.00,,
+--- -D honoured?
+0.04,msec,task-clock,44820,100.00,0.000,CPUs utilized
+--- context switches visible? (5 sleeps => >= 5)
+525,,context-switches,13043293,100.00,,
+--- HITM events known to this perf
+  mem_load_l3_hit_retired.xsnp_hitm                 
+  mem_load_l3_miss_retired.remote_hitm              
+  ocr.all_data_rd.l3_miss.remote_hitm               
+  ocr.all_pf_data_rd.l3_miss.remote_hitm            
+  ocr.all_pf_rfo.l3_miss.remote_hitm                
+  ocr.all_reads.l3_miss.remote_hitm                 
+  ocr.all_rfo.l3_miss.remote_hitm                   
+  ocr.demand_code_rd.l3_miss.remote_hitm            
+  ocr.demand_data_rd.l3_miss.remote_hitm            
+  ocr.demand_rfo.l3_miss.remote_hitm                
+  ocr.other.l3_miss.remote_hitm                     
+  ocr.pf_l1d_and_sw.l3_miss.remote_hitm             
+  ocr.pf_l2_data_rd.l3_miss.remote_hitm             
+  ocr.pf_l2_rfo.l3_miss.remote_hitm                 
+  ocr.pf_l3_data_rd.l3_miss.remote_hitm             
+  ocr.pf_l3_rfo.l3_miss.remote_hitm                 
+  offcore_response:request=all_data_rd:response=l3_miss.remote_hitm
+        OCR.ALL_DATA_RD.L3_MISS.REMOTE_HITM]
+  offcore_response:request=all_pf_data_rd:response=l3_miss.remote_hitm
+        OCR.ALL_PF_DATA_RD.L3_MISS.REMOTE_HITM]
+  offcore_response:request=all_pf_rfo:response=l3_miss.remote_hitm
+        OCR.ALL_PF_RFO.L3_MISS.REMOTE_HITM]
+  offcore_response:request=all_reads:response=l3_miss.remote_hitm
+        OCR.ALL_READS.L3_MISS.REMOTE_HITM]
+  offcore_response:request=all_rfo:response=l3_miss.remote_hitm
+        OCR.ALL_RFO.L3_MISS.REMOTE_HITM]
+  offcore_response:request=demand_code_rd:response=l3_miss.remote_hitm
+        OCR.DEMAND_CODE_RD.L3_MISS.REMOTE_HITM]
+  offcore_response:request=demand_data_rd:response=l3_miss.remote_hitm
+        OCR.DEMAND_DATA_RD.L3_MISS.REMOTE_HITM]
+  offcore_response:request=demand_rfo:response=l3_miss.remote_hitm
+        OCR.DEMAND_RFO.L3_MISS.REMOTE_HITM]
+  offcore_response:request=other:response=l3_miss.remote_hitm
+        OCR.OTHER.L3_MISS.REMOTE_HITM]
+  offcore_response:request=pf_l1d_and_sw:response=l3_miss.remote_hitm
+        OCR.PF_L1D_AND_SW.L3_MISS.REMOTE_HITM]
+  offcore_response:request=pf_l2_data_rd:response=l3_miss.remote_hitm
+        OCR.PF_L2_DATA_RD.L3_MISS.REMOTE_HITM]
+  offcore_response:request=pf_l2_rfo:response=l3_miss.remote_hitm
+        OCR.PF_L2_RFO.L3_MISS.REMOTE_HITM]
+  offcore_response:request=pf_l3_data_rd:response=l3_miss.remote_hitm
+        OCR.PF_L3_DATA_RD.L3_MISS.REMOTE_HITM]
+  offcore_response:request=pf_l3_rfo:response=l3_miss.remote_hitm
+        OCR.PF_L3_RFO.L3_MISS.REMOTE_HITM]

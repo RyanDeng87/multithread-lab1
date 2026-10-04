@@ -33,6 +33,15 @@ mux_check "$EV5A" "$S0_8"
 for l in $LOCKS; do
     run_perf "$RES/perf_1shard_8on8/sharded_$l" "sharded:$l" 8 1 "$S0_8" "$EV5A"
 done
+# The same table with user-mode-only hardware counters: perf_event_paranoid
+# is 0 on Frontera, so the table above also counts the kernel's futex and
+# scheduler work (mutex, park).  Report both.
+uev() { case "$1" in ''|*/*) echo "$1" ;; *) echo "$1:u" ;; esac; }
+EV5AU=$(evlist cycles:u instructions:u L1-dcache-load-misses:u "$(uev "$HITM")"                "$(uev "$RHITM")" context-switches task-clock)
+mux_check "$EV5AU" "$S0_8"
+for l in $LOCKS; do
+    run_perf "$RES/perf_1shard_8on8_user/sharded_$l" "sharded:$l" 8 1 "$S0_8" "$EV5AU"
+done
 
 # Effective clock for the busy fraction: 8 spinning threads on the same 8
 # cores, no syscalls, so cycles / task-clock = the clock those cores ran at.
@@ -52,7 +61,7 @@ for l in $LOCKS; do
     run_perf "$RES/perf_32on8/sharded_$l" "sharded:$l" 32 "$N" "$S0_8" "$EV5B"
 done
 
-for p in perf_1shard_8on8 perf_32on8; do
+for p in perf_1shard_8on8 perf_1shard_8on8_user perf_32on8; do
     perf_table "$RES/$p"/*.txt > "$RES/${p}_all_reps.tsv"
     median_by_config "$RES/${p}_all_reps.tsv" > "$RES/${p}_table.tsv"
 done

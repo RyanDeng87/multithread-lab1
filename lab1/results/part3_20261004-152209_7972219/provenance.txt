@@ -1,0 +1,35 @@
+date:      2026-10-04T15:22:17-0500
+host:      c207-021.frontera.tacc.utexas.edu
+job:       7972219 partition=development
+kernel:    3.10.0-1160.90.1.el7.x86_64
+PRETTY_NAME="CentOS Linux 7 (Core)"
+compiler:  g++ (GCC) 13.2.0
+perf:      perf version 3.10.0-1160.90.1.el7.x86_64.debug
+LD_PRELOAD=
+job shell Cpus_allowed_list:	0-55
+scaling governor cpu0: performance
+intel_pstate no_turbo: 0
+--- modules
+
+Currently Loaded Modules:
+  1) git/2.24.1      3) cmake/4.1.1     5) TACC         7) impi/21.9.0
+  2) autotools/1.2   4) hwloc/1.11.12   6) gcc/13.2.0
+
+Inactive Modules:
+  1) python3
+
+ 
+
+--- git
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+--- md5 (provided files must match the handout)
+04a558ff3d07dff5679e008f967e6169  bench.cpp
+f3f4b99550bd29b762129c87f3e69ca2  sweep.sh
+26b8988835042c054a5eb4877588b336  perfstat.sh
+56d20a1351180984e1387172c4f48a3d  Makefile
+cc1974d5280b6215cbaf80812660c2c8  interface.h
+9a87e01ce0684ef8fb6f3355b7187457  parts.h
+efbf5aaeac5db075f2e0594f37448e42  concurrent_map.h
+a68b2df2727b67a9ac7ba70fc5d75f0d  locks.h
+44e0d2058d3595a09fee1f3975cc566b  hash_map.h

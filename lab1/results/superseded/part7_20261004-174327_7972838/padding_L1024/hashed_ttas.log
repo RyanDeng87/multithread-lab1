@@ -1,0 +1,12 @@
+# /home1/11833/ryandeng87/lab1/results/part7_20261004-174327_7972838/bin/benchlog hashed:ttas shards=1024 mix=80/10/10 writers=0
+# cores=56 hwthreads=56 sockets=2 cores/socket=28 pin order: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55
+T=1        19.7 Mops/s  (19.7 19.5 19.7)
+T=2        14.8 Mops/s  (14.8 14.7 14.8)
+T=4        28.1 Mops/s  (28.1 27.8 28.5)
+T=8        54.3 Mops/s  (54.6 54.3 52.3)
+T=16       99.6 Mops/s  (97.6 99.6 101.9)
+T=28      166.1 Mops/s  (163.1 166.2 166.1)  <- first socket full
+T=40      217.2 Mops/s  (220.7 216.8 217.2)
+T=56      279.1 Mops/s  (279.1 285.1 277.7)  <- every core busy
+T=84       16.9 Mops/s  (15.6 16.9 30.2)  <- oversubscribed
+T=112      66.9 Mops/s  (67.1 66.9 33.0)  <- oversubscribed

@@ -1,0 +1,9 @@
+sharded:shared_mutex T=8   shards=1    mix=roles    rd=1.8 wr=0.0 Mops/s       3617792 ops    2004 ms      1.8 Mops/s
+sharded:shared_mutex T=8   shards=1    mix=roles    rd=1.9 wr=0.0 Mops/s       3789824 ops    2003 ms      1.9 Mops/s
+sharded:shared_mutex T=8   shards=1    mix=roles    rd=1.9 wr=0.0 Mops/s       3798016 ops    2003 ms      1.9 Mops/s
+sharded:shared_mutex T=28  shards=1    mix=roles    rd=1.9 wr=0.0 Mops/s       3757056 ops    2007 ms      1.9 Mops/s
+sharded:shared_mutex T=28  shards=1    mix=roles    rd=1.9 wr=0.0 Mops/s       3846144 ops    2008 ms      1.9 Mops/s
+sharded:shared_mutex T=28  shards=1    mix=roles    rd=1.9 wr=0.0 Mops/s       3764224 ops    2010 ms      1.9 Mops/s
+sharded:shared_mutex T=56  shards=1    mix=roles    rd=1.9 wr=0.0 Mops/s       3855360 ops    2016 ms      1.9 Mops/s
+sharded:shared_mutex T=56  shards=1    mix=roles    rd=1.9 wr=0.0 Mops/s       3736576 ops    2018 ms      1.9 Mops/s
+sharded:shared_mutex T=56  shards=1    mix=roles    rd=1.8 wr=0.0 Mops/s       3692544 ops    2017 ms      1.8 Mops/s

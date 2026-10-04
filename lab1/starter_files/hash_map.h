@@ -43,12 +43,21 @@ private:
 
     // if padded is true, each stripe lock is aligned to a cache line
     // When false the locks are stored normally and may share lines
+    //
+    // count: the number of keys in this stripe's buckets, guarded by the
+    // stripe's lock, so size() sums L counters instead of walking every
+    // bucket while holding every lock.  (Per-stripe count generated with
+    // assistance of claude code.)  With one stripe and 65536 buckets the
+    // walk held the only lock so long that the size() test's writers
+    // starved: 56 s plain and over 10 min under TSan on Lonestar6.
     struct Stripe {
         Lock lock;
+        std::size_t count = 0;
     };
 
     struct alignas(64) PaddedStripe {
         Lock lock;
+        std::size_t count = 0;
     };
 
     using StripeStorage = std::conditional_t<Padded, PaddedStripe, Stripe>;
@@ -91,6 +100,7 @@ public:
         }
 
         buckets_[bucket] = new Node(key, value, buckets_[bucket]);
+        ++stripes_[stripe].count;
         return true;
     }
 
@@ -137,6 +147,7 @@ public:
                 }
 
                 delete current;
+                --stripes_[stripe].count;
                 return true;
             }
             previous = current;
@@ -156,13 +167,9 @@ public:
 
         std::size_t count = 0;
 
-        for(Node* head : buckets_)
+        for(const auto& stripe : stripes_)
         {
-            for(Node* current = head; current!=nullptr; current = current->next)
-            {
-                ++count;
-            }
-
+            count += stripe.count;
         }
         return count;
     }

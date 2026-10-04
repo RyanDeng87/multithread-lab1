@@ -1,0 +1,15 @@
+std::mutex: 8 threads x 5000, mutual exclusion  0.1 s
+std::shared_mutex: 6 readers + 2 writers, exclusion and sharing
+TASLock: 8 threads x 5000, mutual exclusion  0.3 s
+TTASLock: 8 threads x 5000, mutual exclusion  0.2 s
+TicketLock: 8 threads x 5000, mutual exclusion  0.3 s
+ParkingLock: 8 threads x 5000, mutual exclusion  0.2 s
+TASLock: 64 threads x 250, mutual exclusion  0.0 s
+TTASLock: 64 threads x 250, mutual exclusion  0.0 s
+TicketLock: 64 threads x 250, mutual exclusion  0.0 s
+ParkingLock: 64 threads x 250, mutual exclusion  0.0 s
+RWLock (exclusive): 8 threads x 5000, mutual exclusion  0.3 s
+RWLockWP (exclusive): 8 threads x 5000, mutual exclusion  0.3 s
+RWLock: 6 readers + 2 writers, exclusion and sharing
+RWLockWP: 6 readers + 2 writers, exclusion and sharing
+all checks passed

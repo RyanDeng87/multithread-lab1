@@ -1,0 +1,4 @@
+file	flag	impl	T	shards	mix	cpus	Mops	ops	f	cyc/op	ins/op	IPC	L1miss/op	LLCmiss/op	HITM/op	rHITM/op	cs/op(perf)	cs/op(rusage)	busy	busy_ref	taskclk_cpus
+/home1/11833/ryandeng87/lab1/results/part7_20261004-174327_7972838/buckets_perf/hashed_ttas_B131072.r1.txt	ok	hashed:ttas	1	4096	80/10/10	0	8.732	43661312	0.939	356.1	152	0.427	6.946	0.01154							
+/home1/11833/ryandeng87/lab1/results/part7_20261004-174327_7972838/buckets_perf/hashed_ttas_B131072.r2.txt	ok	hashed:ttas	1	4096	80/10/10	0	8.603	43015168	0.939	361.9	152.2	0.420	7.103	0.01269							
+/home1/11833/ryandeng87/lab1/results/part7_20261004-174327_7972838/buckets_perf/hashed_ttas_B131072.r3.txt	ok	hashed:ttas	1	4096	80/10/10	0	8.599	42995712	0.939	362.1	152.1	0.420	7.11	0.01269							

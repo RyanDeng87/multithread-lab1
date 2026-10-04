@@ -1,0 +1,18 @@
+== TSan evidence for the report (LS6 c302-005.ls6.tacc.utexas.edu, g++ (GCC) 15.2.0) ==
+--- test_map_tsan
+test_map_tsan: exit=124  wall=600 s
+last line: StripedHashMap<mutex>(1 stripe): concurrent size(), exact
+TSan banner: ***** Running under ThreadSanitizer v3 (pid 3058050) *****
+ThreadSanitizer WARNING/SUMMARY lines: 0
+--- test_locks_tsan
+test_locks_tsan: exit=0  wall=2 s
+last line: all checks passed
+TSan banner: ***** Running under ThreadSanitizer v3 (pid 3058580) *****
+ThreadSanitizer WARNING/SUMMARY lines: 0
+--- iteration counts under TSan (SCALE=4 => 'x 5000', plain build 'x 20000'):
+std::mutex: 8 threads x 5000, mutual exclusion  0.1 s
+TASLock: 8 threads x 5000, mutual exclusion  0.3 s
+--- linked runtime: 	libtsan.so.2 => /opt/apps/gcc/15.2.0/lib64/libtsan.so.2 (0x000014c947bc5000)
+--- positive control (must show a race, exit 66):
+race_control: exit=66  wall=0 s
+SUMMARY: ThreadSanitizer: data race /home1/11833/ryandeng87/lab1/results/tsan_ls6_20261004-172233_3488219/race.cpp:3 in operator()

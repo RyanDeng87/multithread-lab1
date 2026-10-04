@@ -153,3 +153,19 @@ Layout facts (measured with `sizeof` on our build): `TTASLock` is **1 byte**.
   - HITM/op ≈ **0.03–0.1 padded** (true sharing only, ~27/1024 chance that another thread is on the same stripe) vs **≈ 1–2 unpadded**.
   - L1 misses/op are only **+1–2** higher unpadded.
   - So the counters should resolve a difference even where the throughput gap is inside the spread.
+
+### Part 7 amendment (written after the first Part 7 run and before the rerun)
+
+**Why there is a rerun.**
+- The first `hash_map.h` walked all B buckets in `size()` while holding every stripe lock. With 1 stripe and 65536 buckets, the provided `size()` test starved its writers on Lonestar6: 55.8 s plain, and over 600 s (a timeout) under TSan.
+- Each stripe now keeps an element count, guarded by its own lock, and `size()` sums the counts.
+- That changes the unpadded layout:
+  - **TTAS stripe = 16 B** (1-B lock + 7 B padding + 8-B count), so **64 / 16 = 4 stripes share each line** instead of 64. 1024 stripes now cover 256 lines, not 16.
+  - Padded stripes are still 64 B, one per line.
+- The first run's code had 64 locks per line. Its numbers are kept as a superseded measurement, and are not described as the submitted code.
+
+**Revised padding prediction (L = 1024).**
+- **The gap is much smaller than with 64 per line.** A lock operation now conflicts with another thread on its *line* with probability ≈ (T−1)·f·4/L. At T = 56 that is ≈ 19 %, against ≈ 4.8 % for the stripe itself. So unpadded should be **≈ 10–40 % slower at T = 28–56**, and inside the spread at T ≤ 4.
+- **Fact from the first run:** padded HITM is not ≈ 0. Each stripe's lock line moves to whichever core uses it next, so the padded build already shows ≈ 1 HITM/op (1.13 measured at 28 threads).
+- **So the prediction is:** unpadded HITM/op ≈ padded + 0.1–0.5, L1 misses/op ≈ padded + 0.2–1. The counters should show a small but real difference.
+- **sharded:ttas vs :nopad** is unchanged (the shard layout did not change): within ≈ 0–15 %. The first run measured −1 % to −9 % at T ≤ 56, with HITM 0.557 vs 0.572.

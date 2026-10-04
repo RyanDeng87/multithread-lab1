@@ -1,0 +1,22 @@
+==================
+WARNING: ThreadSanitizer: data race (pid=3058921)
+  Write of size 8 at 0x000000404098 by thread T1:
+    #0 operator() /home1/11833/ryandeng87/lab1/results/tsan_ls6_20261004-172233_3488219/race.cpp:3 (race_tsan+0x401265)
+    #1 __invoke_impl<void, main()::<lambda()> > /opt/apps/gcc/15.2.0/include/c++/15.2.0/bits/invoke.h:63 (race_tsan+0x401265)
+    #2 __invoke<main()::<lambda()> > /opt/apps/gcc/15.2.0/include/c++/15.2.0/bits/invoke.h:98 (race_tsan+0x401265)
+    #3 _M_invoke<0> /opt/apps/gcc/15.2.0/include/c++/15.2.0/bits/std_thread.h:303 (race_tsan+0x401265)
+    #4 operator() /opt/apps/gcc/15.2.0/include/c++/15.2.0/bits/std_thread.h:310 (race_tsan+0x401265)
+    #5 _M_run /opt/apps/gcc/15.2.0/include/c++/15.2.0/bits/std_thread.h:255 (race_tsan+0x401265)
+    #6 execute_native_thread_routine ../../../.././libstdc++-v3/src/c++11/thread.cc:104 (libstdc++.so.6+0xf3623)
+
+  Previous read of size 8 at 0x000000404098 by main thread:
+    #0 main /home1/11833/ryandeng87/lab1/results/tsan_ls6_20261004-172233_3488219/race.cpp:4 (race_tsan+0x401358)
+
+  Location is global 'x' of size 8 at 0x000000404098 (race_tsan+0x404098)
+
+  Thread T1 (tid=3058923, running) created by main thread at:
+    #0 pthread_create ../../.././libsanitizer/tsan/tsan_interceptors_posix.cpp:1041 (libtsan.so.2+0x5f0b0)
+    #1 std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) /admin/build/admin/rpms/ls6/BUILD/gcc-15.2.0/x86_64-pc-linux-gnu/libstdc++-v3/include/x86_64-pc-linux-gnu/bits/gthr-default.h:709 (libstdc++.so.6+0xf370c)
+
+SUMMARY: ThreadSanitizer: data race /home1/11833/ryandeng87/lab1/results/tsan_ls6_20261004-172233_3488219/race.cpp:3 in operator()
+==================

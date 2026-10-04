@@ -1,0 +1,96 @@
+CoarseMap: sequential
+CoarseMap: disjoint keys, 8 threads
+CoarseMap: contended keys, 8 threads
+CoarseMap: concurrent size(), exact
+CoarseMap: 0.3 s
+ShardedMap<mutex>: sequential
+ShardedMap<mutex>: disjoint keys, 8 threads
+ShardedMap<mutex>: contended keys, 8 threads
+ShardedMap<mutex>: concurrent size(), exact
+ShardedMap<mutex>: 0.0 s
+ShardedMap<mutex>(1): sequential
+ShardedMap<mutex>(1): disjoint keys, 8 threads
+ShardedMap<mutex>(1): contended keys, 8 threads
+ShardedMap<mutex>(1): concurrent size(), exact
+ShardedMap<mutex>(1): 0.3 s
+ShardedMap<shared_mutex>: sequential
+ShardedMap<shared_mutex>: disjoint keys, 8 threads
+ShardedMap<shared_mutex>: contended keys, 8 threads
+ShardedMap<shared_mutex>: concurrent size(), exact
+ShardedMap<shared_mutex>: 0.0 s
+ShardedMap<mutex,nopad>: sequential
+ShardedMap<mutex,nopad>: disjoint keys, 8 threads
+ShardedMap<mutex,nopad>: contended keys, 8 threads
+ShardedMap<mutex,nopad>: concurrent size(), exact
+ShardedMap<mutex,nopad>: 0.0 s
+ShardedMap<TAS>: sequential
+ShardedMap<TAS>: disjoint keys, 8 threads
+ShardedMap<TAS>: contended keys, 8 threads
+ShardedMap<TAS>: concurrent size(), exact
+ShardedMap<TAS>: 0.0 s
+ShardedMap<TTAS>: sequential
+ShardedMap<TTAS>: disjoint keys, 8 threads
+ShardedMap<TTAS>: contended keys, 8 threads
+ShardedMap<TTAS>: concurrent size(), exact
+ShardedMap<TTAS>: 0.0 s
+ShardedMap<Ticket>: sequential
+ShardedMap<Ticket>: disjoint keys, 8 threads
+ShardedMap<Ticket>: contended keys, 8 threads
+ShardedMap<Ticket>: concurrent size(), exact
+ShardedMap<Ticket>: 0.0 s
+ShardedMap<Parking>: sequential
+ShardedMap<Parking>: disjoint keys, 8 threads
+ShardedMap<Parking>: contended keys, 8 threads
+ShardedMap<Parking>: concurrent size(), exact
+ShardedMap<Parking>: 0.0 s
+ShardedMap<RW>: sequential
+ShardedMap<RW>: disjoint keys, 8 threads
+ShardedMap<RW>: contended keys, 8 threads
+ShardedMap<RW>: concurrent size(), exact
+ShardedMap<RW>: 0.0 s
+ShardedMap<RWWP>: sequential
+ShardedMap<RWWP>: disjoint keys, 8 threads
+ShardedMap<RWWP>: contended keys, 8 threads
+ShardedMap<RWWP>: concurrent size(), exact
+ShardedMap<RWWP>: 0.0 s
+StripedHashMap<mutex>: sequential
+StripedHashMap<mutex>: disjoint keys, 8 threads
+StripedHashMap<mutex>: contended keys, 8 threads
+StripedHashMap<mutex>: concurrent size(), exact
+StripedHashMap<mutex>: 0.1 s
+StripedHashMap<mutex>(1 stripe): sequential
+StripedHashMap<mutex>(1 stripe): disjoint keys, 8 threads
+StripedHashMap<mutex>(1 stripe): contended keys, 8 threads
+StripedHashMap<mutex>(1 stripe): concurrent size(), exact
+StripedHashMap<mutex>(1 stripe): 55.8 s
+StripedHashMap<mutex>(tiny): sequential
+StripedHashMap<mutex>(tiny): disjoint keys, 8 threads
+StripedHashMap<mutex>(tiny): contended keys, 8 threads
+StripedHashMap<mutex>(tiny): concurrent size(), exact
+StripedHashMap<mutex>(tiny): 0.9 s
+StripedHashMap<shared_mutex>: sequential
+StripedHashMap<shared_mutex>: disjoint keys, 8 threads
+StripedHashMap<shared_mutex>: contended keys, 8 threads
+StripedHashMap<shared_mutex>: concurrent size(), exact
+StripedHashMap<shared_mutex>: 0.0 s
+StripedHashMap<TTAS>: sequential
+StripedHashMap<TTAS>: disjoint keys, 8 threads
+StripedHashMap<TTAS>: contended keys, 8 threads
+StripedHashMap<TTAS>: concurrent size(), exact
+StripedHashMap<TTAS>: 0.0 s
+StripedHashMap<Parking>: sequential
+StripedHashMap<Parking>: disjoint keys, 8 threads
+StripedHashMap<Parking>: contended keys, 8 threads
+StripedHashMap<Parking>: concurrent size(), exact
+StripedHashMap<Parking>: 0.0 s
+StripedHashMap<RW>: sequential
+StripedHashMap<RW>: disjoint keys, 8 threads
+StripedHashMap<RW>: contended keys, 8 threads
+StripedHashMap<RW>: concurrent size(), exact
+StripedHashMap<RW>: 0.0 s
+StripedHashMap<RWWP,nopad>: sequential
+StripedHashMap<RWWP,nopad>: disjoint keys, 8 threads
+StripedHashMap<RWWP,nopad>: contended keys, 8 threads
+StripedHashMap<RWWP,nopad>: concurrent size(), exact
+StripedHashMap<RWWP,nopad>: 0.0 s
+all checks passed

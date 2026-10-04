@@ -1,0 +1,3 @@
+hashed:ttas    T=1   shards=1    mix=80/10/10     39480320 ops    2000 ms     19.7 Mops/s
+hashed:ttas    T=1   shards=1    mix=80/10/10     38664192 ops    2000 ms     19.3 Mops/s
+hashed:ttas    T=1   shards=1    mix=80/10/10     38823936 ops    2000 ms     19.4 Mops/s

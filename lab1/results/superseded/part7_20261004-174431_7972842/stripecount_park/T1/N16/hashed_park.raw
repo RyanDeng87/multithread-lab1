@@ -1,0 +1,3 @@
+hashed:park    T=1   shards=16   mix=80/10/10     37758976 ops    2000 ms     18.9 Mops/s
+hashed:park    T=1   shards=16   mix=80/10/10     37795840 ops    2000 ms     18.9 Mops/s
+hashed:park    T=1   shards=16   mix=80/10/10     37643264 ops    2000 ms     18.8 Mops/s

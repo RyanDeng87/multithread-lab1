@@ -1,0 +1,3 @@
+hashed:ttas    T=32  shards=4096 mix=80/10/10    373910528 ops    2013 ms    185.7 Mops/s
+hashed:ttas    T=32  shards=4096 mix=80/10/10    392090624 ops    2001 ms    195.9 Mops/s
+hashed:ttas    T=32  shards=4096 mix=80/10/10    381968384 ops    2013 ms    189.7 Mops/s

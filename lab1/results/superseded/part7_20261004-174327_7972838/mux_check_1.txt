@@ -1,0 +1,8 @@
+warm-up 124 ms
+coarse         T=8   shards=1    mix=80/10/10      1000448 ops    1004 ms      1.0 Mops/s
+12974159874,,cycles,5185925019,100.00,,
+5829452324,,instructions,5185925019,100.00,0.45,insn per cycle
+163372098,,L1-dcache-load-misses,5185925019,100.00,,
+22550816,,mem_load_l3_hit_retired.xsnp_hitm,5185925019,100.00,,
+3654,,mem_load_l3_miss_retired.remote_hitm,5185925019,100.00,,
+684159,,context-switches,4534044337,100.00,,

@@ -1,0 +1,13 @@
+file	impl	T	shards	rd_Mops	wr_Mops	total_Mops
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers1_shards1/sharded_shared_mutex.raw	sharded:shared_mutex	8	1	1.9	0.0	1.9
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers1_shards1/sharded_shared_mutex.raw	sharded:shared_mutex	28	1	1.9	0.0	1.9
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers1_shards1/sharded_shared_mutex.raw	sharded:shared_mutex	56	1	1.9	0.0	1.9
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers1_shards4096/sharded_shared_mutex.raw	sharded:shared_mutex	8	4096	21.6	1.8	23.4
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers1_shards4096/sharded_shared_mutex.raw	sharded:shared_mutex	28	4096	91.3	1.8	93.0
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers1_shards4096/sharded_shared_mutex.raw	sharded:shared_mutex	56	4096	184.4	1.5	185.9
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers4_shards1/sharded_shared_mutex.raw	sharded:shared_mutex	8	1	0.0	0.7	0.7
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers4_shards1/sharded_shared_mutex.raw	sharded:shared_mutex	28	1	1.5	0.1	1.6
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers4_shards1/sharded_shared_mutex.raw	sharded:shared_mutex	56	1	0.7	0.3	1.1
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers4_shards4096/sharded_shared_mutex.raw	sharded:shared_mutex	8	4096	9.1	5.8	15.0
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers4_shards4096/sharded_shared_mutex.raw	sharded:shared_mutex	28	4096	70.0	6.6	76.6
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers4_shards4096/sharded_shared_mutex.raw	sharded:shared_mutex	56	4096	158.8	6.1	164.9

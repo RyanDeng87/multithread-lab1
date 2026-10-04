@@ -1,0 +1,11 @@
+# perf stat -x, -D 339 -e cycles,instructions,L1-dcache-load-misses,mem_load_l3_hit_retired.xsnp_hitm,mem_load_l3_miss_retired.remote_hitm,context-switches -- taskset -c 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54 ./bench sharded:ttas 28 1024 5
+warm-up 93 ms
+sharded:ttas   T=28  shards=1024 mix=80/10/10    442548224 ops    5001 ms     88.5 Mops/s
+event                                   count         per op
+cycles                           439515182686          993.1
+instructions                      95713825689          216.3
+L1-dcache-load-misses              9557077181           21.6
+mem_load_l3_hit_retired.xsnp_hitm        253561176          0.573
+mem_load_l3_miss_retired.remote_hitm             3102      7.009e-06
+context-switches                          481      1.087e-06
+IPC (instructions/cycles)                              0.218

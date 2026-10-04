@@ -1,0 +1,35 @@
+[17:57:21] results -> /home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838
+[17:57:22] module gcc/13.2.0
+[17:57:22] compiler: g++ (GCC) 13.2.0
+#define HAVE_SHARDED 1      // Part 4: ShardedMap   (concurrent_map.h)
+#define HAVE_LOCKS   1      // Part 5: TAS/TTAS/Ticket/Park (locks.h)
+#define HAVE_RW      1      // Part 6: RWLock, RWLockWP         (locks.h)
+#define HAVE_HASHED  1      // Part 7: StripedHashMap        (hash_map.h)
+layout:        interleaved
+cores:         56   cores in package 0: 28
+socket-0 CPUs: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54
+S0_1=0  S0_8=0,2,4,6,8,10,12,14
+S0_28=0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54
+WARNING: CPU numbers alternate between sockets.  sweep.sh's pin order
+  is CPU-number order, so from T=2 its threads span BOTH sockets and its
+  '<- first socket full' tag at T=28 is wrong.  Say so in the report;
+  the perf runs in these jobs use the socket-0 lists above instead of 0-7.
+[17:57:41] perf: paranoid=0 CS_FALLBACK=0 HITM=mem_load_l3_hit_retired.xsnp_hitm REFCYC=ref-cycles
+[17:57:42] sweep sharded:shared_mutex shards=1 MIX= WRITERS=1 BUCKETS= T=[8 28 56]
+[17:58:03] sweep sharded:shared_mutex shards=1 MIX= WRITERS=4 BUCKETS= T=[8 28 56]
+[17:58:24] sweep sharded:shared_mutex shards=4096 MIX= WRITERS=1 BUCKETS= T=[8 28 56]
+[17:58:45] sweep sharded:shared_mutex shards=4096 MIX= WRITERS=4 BUCKETS= T=[8 28 56]
+file	impl	T	shards	rd_Mops	wr_Mops	total_Mops
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers1_shards1/sharded_shared_mutex.raw	sharded:shared_mutex	8	1	1.9	0.0	1.9
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers1_shards1/sharded_shared_mutex.raw	sharded:shared_mutex	28	1	1.9	0.0	1.9
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers1_shards1/sharded_shared_mutex.raw	sharded:shared_mutex	56	1	1.9	0.0	1.9
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers1_shards4096/sharded_shared_mutex.raw	sharded:shared_mutex	8	4096	21.6	1.8	23.4
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers1_shards4096/sharded_shared_mutex.raw	sharded:shared_mutex	28	4096	91.3	1.8	93.0
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers1_shards4096/sharded_shared_mutex.raw	sharded:shared_mutex	56	4096	184.4	1.5	185.9
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers4_shards1/sharded_shared_mutex.raw	sharded:shared_mutex	8	1	0.0	0.7	0.7
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers4_shards1/sharded_shared_mutex.raw	sharded:shared_mutex	28	1	1.5	0.1	1.6
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers4_shards1/sharded_shared_mutex.raw	sharded:shared_mutex	56	1	0.7	0.3	1.1
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers4_shards4096/sharded_shared_mutex.raw	sharded:shared_mutex	8	4096	9.1	5.8	15.0
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers4_shards4096/sharded_shared_mutex.raw	sharded:shared_mutex	28	4096	70.0	6.6	76.6
+/home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838/writers4_shards4096/sharded_shared_mutex.raw	sharded:shared_mutex	56	4096	158.8	6.1	164.9
+[17:59:06] finished cleanly; artifacts in /home1/11833/ryandeng87/lab1/results/part6w_20261004-175721_7972838

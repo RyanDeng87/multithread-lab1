@@ -1,0 +1,6 @@
+==3058050==Program is run with unlimited stack size, which wouldn't work with ThreadSanitizer.
+Re-execing with stack size limited to 33554432 bytes.
+==3058050==Installed the sigaction for signal 11
+==3058050==Installed the sigaction for signal 7
+==3058050==Installed the sigaction for signal 8
+***** Running under ThreadSanitizer v3 (pid 3058050) *****

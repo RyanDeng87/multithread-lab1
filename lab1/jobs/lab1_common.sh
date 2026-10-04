@@ -268,7 +268,7 @@ run_sweep() {
     mkdir -p "$dir"
     note "sweep $impl shards=$shards MIX=${MIX:-} WRITERS=${WRITERS:-} BUCKETS=${BUCKETS:-} T=[$*]"
     ( cd "$SF" && BENCH_RAW="$dir/$name.raw" \
-          bash sweep.sh "$RES/bin/benchlog" "$impl" "$shards" "$@" \
+          bash "${SWEEP_SH:-sweep.sh}" "$RES/bin/benchlog" "$impl" "$shards" "$@" \
           > "$dir/$name.csv" 2> "$dir/$name.log" )
     # sweep.sh exits 0 and writes an empty mops field when bench fails, and
     # takes the "median" of fewer than three numbers when one run fails.

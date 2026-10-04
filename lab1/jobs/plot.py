@@ -35,6 +35,8 @@ def sweep_log(csv_path):
     """(spread per T, cores, socket boundary) from sweep.sh's stderr log."""
     log = os.path.splitext(csv_path)[0] + ".log"
     spread, cores, sock = {}, None, None
+    runs = read_raw(csv_path)
+    spread = {t: (min(v), max(v)) for t, v in runs.items()}
     if not os.path.exists(log):
         return spread, cores, sock
     for line in open(log):
@@ -42,14 +44,36 @@ def sweep_log(csv_path):
         if m:
             cores, sock = int(m.group(1)), int(m.group(2))
         m = re.match(r"T=(\d+)\s+\S+ Mops/s\s+\(([^)]*)\)", line)
-        if m:
+        if m and not runs:
             runs = [float(x) for x in m.group(2).split() if x]
             if runs:
                 spread[int(m.group(1))] = (min(runs), max(runs))
     return spread, cores, sock
 
 
+def read_raw(path):
+    """{T: [Mops of each run]} from the bench lines next to a sweep CSV
+    (ops / ms, so not rounded to sweep.sh's one decimal)."""
+    raw = os.path.splitext(path)[0] + ".raw"
+    runs = {}
+    if not os.path.exists(raw):
+        return runs
+    for line in open(raw):
+        f = line.split()
+        if "ops" not in f or "ms" not in f:
+            continue
+        t = int(re.search(r"T=(\d+)", line).group(1))
+        ops = float(f[f.index("ops") - 1])
+        ms = float(f[f.index("ms") - 1])
+        runs.setdefault(t, []).append(ops / ms / 1000.0)
+    return runs
+
+
 def read_sweep(path):
+    """[(T, median Mops)], from the raw bench lines if available."""
+    runs = read_raw(path)
+    if runs:
+        return sorted((t, sorted(v)[(len(v) - 1) // 2]) for t, v in runs.items())
     pts = []
     with open(path) as f:
         for row in csv.DictReader(f):
@@ -67,10 +91,14 @@ def impl_name(path):
 
 def labels_for(paths):
     names = [impl_name(p) for p in paths]
+    pretty = {"sweep": "sweep.sh order", "sweep_coarse_ref": "sweep.sh order",
+              "sweep_shards256": "sweep.sh order",
+              "sweep_socketfirst": "socket 0 first"}
     out = []
     for p, n in zip(paths, names):
         if names.count(n) > 1:
-            n += " (" + os.path.basename(os.path.dirname(p)) + ")"
+            d = os.path.basename(os.path.dirname(p))
+            n += " (" + pretty.get(d, d) + ")"
         out.append(n)
     return out
 
@@ -78,14 +106,20 @@ def labels_for(paths):
 def boundaries(ax, cores, sock):
     if sock and cores and sock != cores:
         ax.axvline(sock, color="0.75", lw=1, ls="--",
-                   label=f"socket boundary ({sock})")
+                   label=f"{sock} = cores per socket")
     if cores:
         ax.axvline(cores, color="0.3", lw=1.2,
                    label=f"core count ({cores})")
 
 
-def plot_sweep(out, paths, title):
+def plot_sweep(out, paths, title, band=None):
     fig, ax = plt.subplots(figsize=(7, 4.2))
+    if band:
+        pts = sorted((int(t), float(lo), float(hi)) for t, lo, hi in
+                     (b.split(":") for b in band.split(",")))
+        ax.fill_between([p[0] for p in pts], [p[1] for p in pts],
+                        [p[2] for p in pts], color="0.85",
+                        label="prediction (written before the run)")
     cores = sock = None
     for p, lab in zip(paths, labels_for(paths)):
         pts = read_sweep(p)
@@ -98,7 +132,7 @@ def plot_sweep(out, paths, title):
         ax.errorbar(xs, ys, yerr=[lo, hi], marker="o", ms=3.5, capsize=2.5,
                     lw=1.4, label=lab)
     boundaries(ax, cores, sock)
-    ax.set_xlabel("threads (pinned, one per core)")
+    ax.set_xlabel("threads T (pinned to the first T CPUs of the pin order)")
     ax.set_ylabel("throughput (Mops/s, median of 3)")
     ax.set_xlim(left=0)
     ax.set_ylim(bottom=0)
@@ -169,40 +203,51 @@ def plot_mix(out, root, title):
 
 
 def plot_writers(out, tsv, title):
-    rows = list(csv.DictReader(open(tsv), delimiter="\t"))
-    groups = []
+    rows = list(csv.DictReader(open(tsv), delimiter="	"))
+    data = {}                      # shards -> [(tag, impl, rd, wr)]
     for r in rows:
         w = re.search(r"writers(\d+)_shards(\d+)", r["file"])
-        tag = f"W={w.group(1)} N={w.group(2)} T={r['T']}" if w else r["T"]
-        groups.append((tag, r["impl"].replace("sharded:", ""),
-                       float(r["rd_Mops"]), float(r["wr_Mops"])))
-    tags = list(dict.fromkeys(g[0] for g in groups))
-    impls = list(dict.fromkeys(g[1] for g in groups))
-    fig, ax = plt.subplots(figsize=(max(7, 0.9 * len(tags) * len(impls)), 4))
-    width = 0.8 / len(impls)
-    for i, impl in enumerate(impls):
-        xs, rd, wr = [], [], []
-        for j, tag in enumerate(tags):
-            for g in groups:
-                if g[0] == tag and g[1] == impl:
-                    xs.append(j + i * width)
-                    rd.append(g[2])
-                    wr.append(g[3])
-        ax.bar(xs, rd, width, label=f"{impl} readers")
-        ax.bar(xs, wr, width, bottom=rd, label=f"{impl} writers",
-               hatch="//", alpha=0.6)
-    ax.set_xticks([j + 0.4 - width / 2 for j in range(len(tags))])
-    ax.set_xticklabels(tags, rotation=30, ha="right", fontsize=8)
-    ax.set_ylabel("Mops/s (readers + writers stacked)")
-    ax.set_title(title or "WRITERS=n: reader vs writer throughput")
-    ax.legend(fontsize=7, ncol=2)
-    ax.grid(alpha=0.3, axis="y")
+        shards = w.group(2) if w else r["shards"]
+        tag = f"W={w.group(1)} T={r['T']}" if w else f"T={r['T']}"
+        data.setdefault(shards, []).append(
+            (tag, r["impl"].replace("sharded:", ""),
+             float(r["rd_Mops"]), float(r["wr_Mops"])))
+    keys = sorted(data, key=int)
+    fig, axes = plt.subplots(1, len(keys), squeeze=False,
+                             figsize=(6.5 * len(keys), 4))
+    for ax, k in zip(axes[0], keys):
+        groups = data[k]
+        tags = list(dict.fromkeys(g[0] for g in groups))
+        impls = list(dict.fromkeys(g[1] for g in groups))
+        width = 0.8 / len(impls)
+        for i, impl in enumerate(impls):
+            xs, rd, wr = [], [], []
+            for j, tag in enumerate(tags):
+                for g in groups:
+                    if g[0] == tag and g[1] == impl:
+                        xs.append(j + i * width)
+                        rd.append(g[2])
+                        wr.append(g[3])
+            ax.bar(xs, rd, width, label=f"{impl} readers")
+            ax.bar(xs, wr, width, bottom=rd, label=f"{impl} writers",
+                   hatch="//", alpha=0.6)
+        ax.set_xticks([j + 0.4 - width / 2 for j in range(len(tags))])
+        ax.set_xticklabels(tags, rotation=30, ha="right", fontsize=8)
+        ax.set_ylabel("Mops/s (readers + writers stacked)")
+        ax.set_title(f"{k} shard(s)")
+        ax.legend(fontsize=7, ncol=2)
+        ax.grid(alpha=0.3, axis="y")
+    fig.suptitle(title or "WRITERS=n: reader vs writer throughput")
     fig.tight_layout()
     fig.savefig(out, dpi=200)
 
 
 def main(argv):
-    title = None
+    title = band = None
+    if "--band" in argv:
+        i = argv.index("--band")
+        band = argv[i + 1]
+        del argv[i:i + 2]
     if "--title" in argv:
         i = argv.index("--title")
         title = argv[i + 1]
@@ -211,7 +256,7 @@ def main(argv):
         sys.exit(__doc__)
     cmd, out, args = argv[1], argv[2], argv[3:]
     if cmd == "sweep":
-        plot_sweep(out, args, title)
+        plot_sweep(out, args, title, band)
     elif cmd == "count":
         plot_count(out, args, title)
     elif cmd == "mix":

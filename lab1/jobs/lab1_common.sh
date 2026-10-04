@@ -295,7 +295,9 @@ run_perf() {
     mkdir -p "$(dirname "$out")"
     warm=$(cd "$SF" && timeout "$BENCH_TIMEOUT" taskset -c "$first" ./bench "$impl" 1 "$shards" 1 \
                2>&1 >/dev/null | awk '/^warm-up/ {print $2}')
-    delay=$(( ${warm:-1000} * 3 / 2 + 200 ))
+    # DELAY just past the warm-up; Part 7 tightens it (DELAY_NUM/DEN/ADD)
+    # because its long-chain warm-ups would otherwise eat the window.
+    delay=$(( ${warm:-1000} * ${DELAY_NUM:-3} / ${DELAY_DEN:-2} + ${DELAY_ADD:-200} ))
     for r in $(seq 1 "$REPS"); do
         note "perf $impl T=$t shards=$shards cpus=$cpus DELAY=$delay rep $r"
         ( cd "$SF" && DELAY=$delay EVENTS=$ev timeout $(( BENCH_TIMEOUT + 60 )) \
@@ -305,7 +307,7 @@ run_perf() {
             # warm-up ran longer than the probe said: keep the evidence, redo
             mv "$out.r$r.txt" "$out.r$r.txt.warmup_counted"
             warm=$(awk '/^warm-up/ {print $2}' "$out.r$r.txt.warmup_counted")
-            delay=$(( warm * 3 / 2 + 200 ))
+            delay=$(( warm * 3 / 2 + 500 ))
             note "  warm-up ${warm} ms overlapped the count; rerun with DELAY=$delay"
             ( cd "$SF" && DELAY=$delay EVENTS=$ev timeout $(( BENCH_TIMEOUT + 60 )) \
                   bash perfstat.sh "$prog" "$impl" "$t" "$shards" "$cpus" ) \

@@ -115,3 +115,41 @@ Reading the table:
 - **One shard, 50/25/25:** RW ≈ or < TTAS.
 - **shared_mutex at one shard:** writer starvation. glibc's default rwlock prefers readers, so a waiting writer does not stop new readers. *Measured locally* (WRITERS=1 and WRITERS=4 at 32 threads, 1 shard): `wr = 0.0 Mops/s` while readers run 12–13 Mops/s. Our RWLock does the same (`wr = 0.0`).
 - **RWLockWP:** writer throughput goes from ≈ 0 to substantial, reader throughput collapses (*measured locally:* `rd = 0.0–0.3` with 1–4 writers), and the total is lower because readers lose their parallelism.
+
+## Part 7 — hash table (predictions, written before the Part 7 run)
+
+Layout facts (measured with `sizeof` on our build): `TTASLock` is **1 byte**.
+- A padded stripe is 64 B, one lock per line.
+- An unpadded stripe is 1 B, so **64 stripe locks share each 64-B line**: 1024 stripes fit on just 16 lines.
+- An unpadded `ShardedMap<TTAS>` shard is 56 B, so shard *i*'s lock shares a line with shard *i−1*'s map header (~1.14 shards per line).
+- A chain node is 24 B (key, value, next), allocated as a 32-B malloc chunk. Chains link nodes allocated at random times, so each visited node is ≈ one line.
+
+### 1. Container at one thread (N = 4096 stripes = shards)
+
+- **Chain length:** with 2¹⁹ keys present, the mean chain length is λ = 524288 / B. That gives λ = 0.25, 1, 4, 16, 64, 256 for B = 2²¹ … 2¹¹.
+- **Misses per op ≈ a + s·λ.**
+  - A find for an absent key (half of finds) walks the whole chain (λ nodes). A find for a present key stops halfway (≈ 1 + (λ−1)/2). Inserts and erases also walk the chain.
+  - So the predicted slope is **s ≈ 0.75 L1 misses per unit of chain length**.
+  - The intercept a ≈ 3–5: the bucket-head line, the stripe-lock line, one node, plus prefetcher fills.
+- **Per-miss cost on long chains:** a chain walk is serial pointer-chasing. The node set (512K × 32 B ≈ 16 MB) fits in the 38.5 MB L3, so each miss should cost an **L3 hit, ≈ 70–80 cycles (~20–25 ns)**. That predicts a cycles/op slope ≈ 0.75 × 75 ≈ 55 cycles per unit λ, about 14k cycles/op (≈ 0.25 Mops/s) at λ = 256.
+- **Crossover:** sharded:ttas at one thread and N = 4096 runs at ≈ 4.1 Mops/s (Part 5 shard-count redo). hashed:ttas wins at λ ≤ 1 (≈ 2–3 misses vs ~12 tree levels), is close at λ = 4, and **loses from B = 32768 (λ = 16)** down.
+
+### 2. Stripe count
+
+- **The model is the same as Part 4:** collision probability ≈ (T−1)·f / L, where f ≈ 0.9 because the whole operation runs inside the stripe lock.
+- **Collisions are cheap here.** A TTAS or Parking collision costs a spin handoff (~0.1–0.3 µs), much less than std::mutex's futex sleep. So, as in the Part 5 shard-count redo, the T=32 ÷ T=1 ratio should stop improving by **L ≈ 1024** for both locks.
+- **Ship L = 1024.** Larger L only adds memory (a 64-B padded lock per stripe).
+
+### 3. Padding (L = 1024)
+
+- **Locks per line when unpadded:** 64 / sizeof(TTASLock) = **64**.
+- **hashed:ttas vs :nopad:**
+  - No difference at T = 1.
+  - The gap opens at T ≥ 4 and is **largest at T = 56**: unpadded is predicted **2–4× slower**, because 56 threads hammer 16 lines and every acquire and release finds the line Modified in another core.
+  - Past 56 both collapse (TTAS under oversubscription), which masks the gap.
+- **What bounds it:** each operation touches the lock word twice (acquire RMW, release store). Unpadded, each touch costs one coherence handoff (~100 ns) on top of an operation that is only ~0.2 µs at B = 2·KEYS. So the slowdown is bounded at roughly (op + 2 handoffs) / op ≈ 2×, plus serialization of RMWs on the 16 shared lines.
+- **sharded:ttas vs :nopad:** within ~0–15%, probably inside the spread at low T. Only neighbouring shard pairs share a line, and the ~0.3 µs tree walk dominates each operation.
+- **perf at 28 threads on one socket:**
+  - HITM/op ≈ **0.03–0.1 padded** (true sharing only, ~27/1024 chance that another thread is on the same stripe) vs **≈ 1–2 unpadded**.
+  - L1 misses/op are only **+1–2** higher unpadded.
+  - So the counters should resolve a difference even where the throughput gap is inside the spread.
